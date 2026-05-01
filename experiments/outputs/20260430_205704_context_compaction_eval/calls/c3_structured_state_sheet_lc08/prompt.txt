@@ -1,0 +1,44 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+COMPACTED MEMORY:
+Goal: Fix the task scheduler so reminders fire in the correct local timezone.
+Status: The reminder selection query already works.
+File: scheduler/reminder_jobs.py
+Constraint: Use the user's stored IANA timezone; do not fall back to the server timezone.
+Open issue: The scheduler still picks the wrong timezone source.
+Next step: Edit `scheduler/reminder_jobs.py` to read `user.timezone_name` and stop using the server timezone, then rerun `pytest tests/test_reminder_jobs.py -q`.
+
+RECENT TURNS:
+Turn 1 [User]: We compacted the earlier session because the chat was getting long.
+Turn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.
+Turn 3 [User]: Please recover the current state exactly before taking the next step.
+
+GOAL OPTIONS:
+  A: Add a new calendar UI for reminder templates.
+  B: Fix the task scheduler so reminders fire in the correct local timezone.
+  C: Replace the scheduler with a managed third-party service.
+
+FILE OPTIONS:
+  A: scheduler/job_runner.py
+  B: tests/test_reminder_jobs.py
+  C: scheduler/reminder_jobs.py
+
+CONSTRAINT OPTIONS:
+  A: Use the user's stored IANA timezone; do not fall back to the server timezone.
+  B: Use the server timezone because it matches staging.
+  C: Convert every reminder to UTC text before scheduling it.
+
+DETAIL OPTIONS:
+  A: The only important field is `user.locale`.
+  B: The root problem is a CSS issue in the reminders settings page.
+  C: The exact timezone field is `user.timezone_name`.
+
+NEXT_STEP OPTIONS:
+  A: Edit `scheduler/job_runner.py` and keep using the server timezone.
+  B: Edit `scheduler/reminder_jobs.py` to read `user.timezone_name` and stop using the server timezone, then rerun `pytest tests/test_reminder_jobs.py -q`.
+  C: Ignore scheduling and build a new calendar UI.
+
+Return strict JSON only.

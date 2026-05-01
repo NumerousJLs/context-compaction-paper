@@ -1,0 +1,36 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+RECENT TURNS ONLY:
+Turn 1 [User]: We compacted the earlier session because the chat was getting long.
+Turn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.
+Turn 3 [User]: Please recover the current state exactly before taking the next step.
+
+GOAL OPTIONS:
+  A: Finish the notification digest job so daily digests send once per user.
+  B: Create a whole new notification center UI.
+  C: Replace the digest job with a third-party product.
+
+FILE OPTIONS:
+  A: jobs/query_digest_candidates.py
+  B: jobs/daily_digest.py
+  C: tests/test_daily_digest.py
+
+CONSTRAINT OPTIONS:
+  A: Revisit the candidate selection query before handling sends.
+  B: Pause digests and focus on a new UI.
+  C: Candidate selection is already correct; do not revisit that query.
+
+DETAIL OPTIONS:
+  A: The remaining issue is an empty candidate list.
+  B: The remaining failing case is duplicate sends for `user_id=42`.
+  C: The real issue is the spacing in the notification center mockup.
+
+NEXT_STEP OPTIONS:
+  A: Edit `jobs/daily_digest.py` to prevent duplicate sends for `user_id=42` and rerun `pytest tests/test_daily_digest.py -q`.
+  B: Re-edit `jobs/query_digest_candidates.py` even though the query is already correct.
+  C: Ignore the backend and build a notification center UI.
+
+Return strict JSON only.

@@ -1,0 +1,11 @@
+{
+  "model": "qwen3.5:4b",
+  "prompt": "Recover the current coding-session state from the context below.\nUse only the provided session context and recent turns.\nChoose exactly one option ID for each field.\nReturn JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.\n\nCOMPACTED MEMORY:\nGoal: Recover the local compose startup flow for the API and worker stack.\nStatus: The images build successfully and env files load.\nFile: docker/docker-compose.dev.yml\nConstraint: Keep the existing service names; do not rename containers while debugging.\nOpen issue: The dev startup instructions still point at the wrong command.\nNext step: Use `docker compose -f docker/docker-compose.dev.yml up api worker` and keep the service names unchanged while fixing `docker/docker-compose.dev.yml`.\n\nRECENT TURNS:\nTurn 1 [User]: We compacted the earlier session because the chat was getting long.\nTurn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.\nTurn 3 [User]: Please recover the current state exactly before taking the next step.\n\nGOAL OPTIONS:\n  A: Replace Docker Compose with Kubernetes manifests.\n  B: Design a new local setup walkthrough page.\n  C: Recover the local compose startup flow for the API and worker stack.\n\nFILE OPTIONS:\n  A: docker/docker-compose.dev.yml\n  B: docker/Dockerfile.api\n  C: scripts/dev_up.sh\n\nCONSTRAINT OPTIONS:\n  A: Rename the API and worker services to make the stack clearer.\n  B: Keep the existing service names; do not rename containers while debugging.\n  C: Move the whole stack to Nomad before debugging.\n\nDETAIL OPTIONS:\n  A: The exact startup command is `docker compose -f docker/docker-compose.dev.yml up api worker`.\n  B: The old command was `docker compose up db cache`.\n  C: The issue is just a broken screenshot in the docs.\n\nNEXT_STEP OPTIONS:\n  A: Rename the services and only start db plus cache.\n  B: Skip the compose file and edit the docs screenshot.\n  C: Use `docker compose -f docker/docker-compose.dev.yml up api worker` and keep the service names unchanged while fixing `docker/docker-compose.dev.yml`.\n\nReturn strict JSON only.",
+  "stream": false,
+  "options": {
+    "temperature": 0,
+    "num_predict": 96
+  },
+  "keep_alive": "30m",
+  "think": false
+}

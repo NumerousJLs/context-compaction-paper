@@ -1,0 +1,44 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+COMPACTED MEMORY:
+Goal: Stabilize the email preview command so transactional templates render correctly.
+Status: The fixture loader and snapshot refresh script already work.
+File: cli/email_preview.py
+Constraint: Keep Jinja autoescaping enabled; do not disable it for convenience.
+Open issue: The preview command still takes the unsafe rendering shortcut.
+Next step: continue the pending fix in the target file, then rerun the relevant verification.
+
+RECENT TURNS:
+Turn 1 [User]: We compacted the earlier session because the chat was getting long.
+Turn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.
+Turn 3 [User]: Please recover the current state exactly before taking the next step.
+
+GOAL OPTIONS:
+  A: Stabilize the email preview command so transactional templates render correctly.
+  B: Migrate the whole mail system to a third-party vendor.
+  C: Create a new visual email builder.
+
+FILE OPTIONS:
+  A: mail/render.py
+  B: cli/email_preview.py
+  C: tests/test_email_preview.py
+
+CONSTRAINT OPTIONS:
+  A: Turn off Jinja autoescaping so previews match the old snapshots.
+  B: Replace Jinja with MJML before fixing the command.
+  C: Keep Jinja autoescaping enabled; do not disable it for convenience.
+
+DETAIL OPTIONS:
+  A: The only important flag is `--template password_reset`.
+  B: The preview command still needs `--template welcome_email`.
+  C: The main issue is a font mismatch in the preview browser.
+
+NEXT_STEP OPTIONS:
+  A: Update `cli/email_preview.py` to keep autoescaping enabled and preserve `--template welcome_email`, then rerun `pytest tests/test_email_preview.py -q`.
+  B: Edit `mail/render.py` and disable autoescaping.
+  C: Ignore the CLI and build a visual email editor.
+
+Return strict JSON only.

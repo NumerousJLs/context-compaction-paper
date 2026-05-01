@@ -1,0 +1,4 @@
+condition,error_type,count
+C1_recent_only,blended_old_and_new_state,2
+C1_recent_only,lost_constraint,1
+C1_recent_only,lost_exact_detail,1

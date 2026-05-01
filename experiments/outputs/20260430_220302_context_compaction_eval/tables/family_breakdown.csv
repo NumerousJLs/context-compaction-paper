@@ -1,0 +1,16 @@
+condition,family,n,continuity_score
+C0_full_transcript,latest_constraint,2,1.0000
+C1_recent_only,latest_constraint,2,0.6000
+C2_bullet_summary,latest_constraint,2,1.0000
+C3_structured_state_sheet,latest_constraint,2,1.0000
+C4_hybrid_state_sheet,latest_constraint,2,1.0000
+C0_full_transcript,brittle_detail,2,1.0000
+C1_recent_only,brittle_detail,2,0.9000
+C2_bullet_summary,brittle_detail,2,0.9000
+C3_structured_state_sheet,brittle_detail,2,1.0000
+C4_hybrid_state_sheet,brittle_detail,2,1.0000
+C0_full_transcript,next_step_continuity,2,1.0000
+C1_recent_only,next_step_continuity,2,0.5000
+C2_bullet_summary,next_step_continuity,2,0.9000
+C3_structured_state_sheet,next_step_continuity,2,1.0000
+C4_hybrid_state_sheet,next_step_continuity,2,1.0000

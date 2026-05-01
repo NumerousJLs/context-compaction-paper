@@ -1,0 +1,39 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+COMPACTED MEMORY:
+Goal: Fix the frontend build so the API base URL is injected again. Status: The fallback config object already works. File: frontend/build/config.ts Constraint: Keep the environment lookup at build time; do not hardcode the API URL. Open issue: The build step lost the exact environment key. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The exact key is `VITE_API_BASE_URL`. - Exact next action: Edit `frontend/build/config.ts` to preserve build-time injection of `VITE_API_BASE_URL`, then rerun `npm test ...
+
+RECENT TURNS:
+Turn 1 [User]: We compacted the earlier session because the chat was getting long.
+Turn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.
+Turn 3 [User]: Please recover the current state exactly before taking the next step.
+
+GOAL OPTIONS:
+  A: Move the frontend to a different bundler first.
+  B: Fix the frontend build so the API base URL is injected again.
+  C: Design a new settings page for build variables.
+
+FILE OPTIONS:
+  A: frontend/src/config.ts
+  B: frontend/.env.example
+  C: frontend/build/config.ts
+
+CONSTRAINT OPTIONS:
+  A: Keep the environment lookup at build time; do not hardcode the API URL.
+  B: Hardcode the API URL in the source config file.
+  C: Move configuration to localStorage first.
+
+DETAIL OPTIONS:
+  A: The old key was `API_BASE_URL`.
+  B: The actual bug is a misaligned button in the settings page.
+  C: The exact key is `VITE_API_BASE_URL`.
+
+NEXT_STEP OPTIONS:
+  A: Edit `frontend/src/config.ts` and hardcode `API_BASE_URL`.
+  B: Edit `frontend/build/config.ts` to preserve build-time injection of `VITE_API_BASE_URL`, then rerun `npm test -- --runInBand config`.
+  C: Ignore the build and redesign the settings page.
+
+Return strict JSON only.

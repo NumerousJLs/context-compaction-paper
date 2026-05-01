@@ -1,0 +1,48 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+COMPACTED MEMORY:
+Goal: Finish the Flask user search endpoint so filtered queries work again.
+Status: The request parser and pagination fix are already done.
+File: api/routes/user_search.py
+Constraint: Use Postgres ILIKE filters and do not reintroduce SQLite-specific query code.
+Open issue: The search handler is still using the outdated SQLite query path.
+Next step: Edit `api/routes/user_search.py` to switch the query builder to Postgres ILIKE and rerun `pytest tests/api/test_user_search.py -q`.
+Exact details:
+- Remember that the failing case is `GET /users/search?q=jo` returning an empty list.
+
+RECENT TURNS:
+Turn 1 [User]: I found a stale reminder from an abandoned branch. It says to work in `api/routes/users.py` and to use this old direction: Keep the old SQLite LIKE query because production still mirrors local dev.
+Turn 2 [Tool]: Stale reminder detail that may be wrong: The old failure was a timeout on `GET /users?page=2`.
+Turn 3 [Assistant]: That note looks stale. I should not trust the reminder file, rule, detail, or next step until I reconcile it with the earlier session.
+Turn 4 [User]: Exactly. Recover the real final state from the earlier context, not the stale reminder, before you continue.
+Turn 5 [Assistant]: I will ignore the stale reminder unless the earlier context confirms this old next step: Edit `api/routes/users.py` and keep the SQLite query path in place.
+
+GOAL OPTIONS:
+  A: Finish the Flask user search endpoint so filtered queries work again.
+  B: Rewrite the React search modal for the user dashboard.
+  C: Add a new Elasticsearch cluster for user search.
+
+FILE OPTIONS:
+  A: api/routes/users.py
+  B: api/routes/user_search.py
+  C: tests/api/test_user_search.py
+
+CONSTRAINT OPTIONS:
+  A: Keep the old SQLite LIKE query because production still mirrors local dev.
+  B: Move the search to Elasticsearch before fixing the endpoint.
+  C: Use Postgres ILIKE filters and do not reintroduce SQLite-specific query code.
+
+DETAIL OPTIONS:
+  A: The old failure was a timeout on `GET /users?page=2`.
+  B: Remember that the failing case is `GET /users/search?q=jo` returning an empty list.
+  C: The main issue is a CSS overflow in the search drawer.
+
+NEXT_STEP OPTIONS:
+  A: Edit `api/routes/user_search.py` to switch the query builder to Postgres ILIKE and rerun `pytest tests/api/test_user_search.py -q`.
+  B: Edit `api/routes/users.py` and keep the SQLite query path in place.
+  C: Skip the backend and only change the search modal placeholder text.
+
+Return strict JSON only.

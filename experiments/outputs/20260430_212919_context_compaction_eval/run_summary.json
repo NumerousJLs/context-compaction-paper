@@ -1,0 +1,12 @@
+{
+  "items_evaluated": 30,
+  "tasks": 6,
+  "conditions": [
+    "C0_full_transcript",
+    "C1_recent_only",
+    "C2_bullet_summary",
+    "C3_structured_state_sheet",
+    "C4_hybrid_state_sheet"
+  ],
+  "model": "qwen3.5:4b"
+}

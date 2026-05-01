@@ -1,0 +1,43 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+COMPACTED MEMORY:
+- Goal: Finish the billing webhook rollout without repeating already completed setup work.
+- Progress: Schema migration, secret loading, and endpoint registration are already complete.
+- Current focus is in the webhook consumer module, and the latest rule is the schema work is already done.
+- The open issue is Only the 409 retry behavior is still failing.
+- Next: finish the pending fix and preserve the retry-on-409 test.
+
+RECENT TURNS:
+Turn 1 [User]: We compacted the earlier session because the chat was getting long.
+Turn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.
+Turn 3 [User]: Please recover the current state exactly before taking the next step.
+
+GOAL OPTIONS:
+  A: Build a billing analytics dashboard first.
+  B: Finish the billing webhook rollout without repeating already completed setup work.
+  C: Replace billing webhooks with a polling job.
+
+FILE OPTIONS:
+  A: billing/webhook_consumer.py
+  B: billing/webhook_schema.py
+  C: tests/test_webhook_consumer.py
+
+CONSTRAINT OPTIONS:
+  A: Revisit the schema migration before touching runtime logic.
+  B: Pause rollout and redesign webhook payloads.
+  C: Do not touch the already-migrated schema file.
+
+DETAIL OPTIONS:
+  A: The remaining failing test is `tests/test_webhook_consumer.py::test_retries_409`.
+  B: The remaining issue is a schema migration hash mismatch.
+  C: The real problem is a chart legend in the billing UI.
+
+NEXT_STEP OPTIONS:
+  A: Re-edit `billing/webhook_schema.py` even though the migration is already done.
+  B: Ignore the backend and build a billing analytics dashboard.
+  C: Edit `billing/webhook_consumer.py` to handle the 409 retry path and rerun `pytest tests/test_webhook_consumer.py -q`.
+
+Return strict JSON only.

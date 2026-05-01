@@ -1,0 +1,6 @@
+condition,error_type,count
+C0_full_transcript,parse_error,6
+C1_recent_only,parse_error,6
+C2_bullet_summary,parse_error,6
+C3_structured_state_sheet,parse_error,6
+C4_hybrid_state_sheet,parse_error,6

@@ -1,0 +1,11 @@
+{
+  "model": "qwen3.5:4b",
+  "prompt": "Recover the current coding-session state from the context below.\nUse only the provided session context and recent turns.\nChoose exactly one option ID for each field.\nReturn JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.\n\nCOMPACTED MEMORY:\nGoal: Repair the OAuth callback handler so the login redirect flow finishes correctly.\nStatus: Session persistence and redirect mapping already work.\nFile: auth/callback_handler.py\nConstraint: Validate the `state` parameter before exchanging the auth code.\nOpen issue: The callback still applies the wrong ordering for state validation.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.\n\nRECENT TURNS:\nTurn 1 [User]: We compacted the earlier session because the chat was getting long.\nTurn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.\nTurn 3 [User]: Please recover the current state exactly before taking the next step.\n\nGOAL OPTIONS:\n  A: Build a new login screen animation for the app.\n  B: Replace OAuth with SAML before fixing the callback.\n  C: Repair the OAuth callback handler so the login redirect flow finishes correctly.\n\nFILE OPTIONS:\n  A: auth/session_store.py\n  B: auth/callback_handler.py\n  C: tests/test_callback_handler.py\n\nCONSTRAINT OPTIONS:\n  A: Validate the `state` parameter before exchanging the auth code.\n  B: Exchange the auth code first and validate `state` later.\n  C: Skip state validation in staging for easier testing.\n\nDETAIL OPTIONS:\n  A: The only path that matters is `/auth/login`.\n  B: The exact redirect path must remain `/auth/callback`.\n  C: The problem is a spacing issue in the login button text.\n\nNEXT_STEP OPTIONS:\n  A: Edit `auth/callback_handler.py` to validate `state` before code exchange and keep `/auth/callback`, then rerun `pytest tests/test_callback_handler.py -q`.\n  B: Edit `auth/session_store.py` and keep validating `state` later.\n  C: Skip the backend and animate the login screen.\n\nReturn strict JSON only.",
+  "stream": false,
+  "options": {
+    "temperature": 0,
+    "num_predict": 96
+  },
+  "keep_alive": "30m",
+  "think": false
+}

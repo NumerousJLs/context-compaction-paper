@@ -1,0 +1,9 @@
+Here is the recovered current coding-session state in JSON format:
+
+{
+"goal_id": "A",
+"file_id": "B",
+"constraint_id": "B",
+"detail_id": "C",
+"next_step_id": "B"
+}

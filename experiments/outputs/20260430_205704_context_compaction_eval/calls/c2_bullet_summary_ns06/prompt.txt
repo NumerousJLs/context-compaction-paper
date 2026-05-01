@@ -1,0 +1,43 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+COMPACTED MEMORY:
+- Goal: Finish the Slack notifier retry flow so transient API failures recover cleanly.
+- Progress: Webhook loading, channel selection, and message formatting already work.
+- Current focus is in the Slack notifier runtime, and the latest rule is message formatting is already done.
+- The open issue is Only retry behavior on transient failures is still missing.
+- Next: finish the pending fix and preserve the missing retry on 429.
+
+RECENT TURNS:
+Turn 1 [User]: We compacted the earlier session because the chat was getting long.
+Turn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.
+Turn 3 [User]: Please recover the current state exactly before taking the next step.
+
+GOAL OPTIONS:
+  A: Finish the Slack notifier retry flow so transient API failures recover cleanly.
+  B: Replace Slack notifications with email only.
+  C: Design a new incident dashboard.
+
+FILE OPTIONS:
+  A: notifications/message_builder.py
+  B: tests/test_slack_notifier.py
+  C: notifications/slack_notifier.py
+
+CONSTRAINT OPTIONS:
+  A: Rewrite the message builder again before touching retries.
+  B: Message formatting already works; do not rewrite the builder.
+  C: Pause Slack work and build an incident dashboard.
+
+DETAIL OPTIONS:
+  A: The remaining failure is bad markdown formatting.
+  B: The actual issue is a chart label in the incident dashboard.
+  C: The remaining failure is a missing retry on `429 Too Many Requests`.
+
+NEXT_STEP OPTIONS:
+  A: Re-edit `notifications/message_builder.py` even though formatting already works.
+  B: Edit `notifications/slack_notifier.py` to add a retry for `429 Too Many Requests` and rerun `pytest tests/test_slack_notifier.py -q`.
+  C: Ignore the notifier and build an incident dashboard.
+
+Return strict JSON only.

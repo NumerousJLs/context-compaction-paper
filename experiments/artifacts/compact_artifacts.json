@@ -1,0 +1,452 @@
+{
+  "lc01": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Finish the Flask user search endpoint so filtered queries work again.\n- Progress: The request parser and pagination fix are already done.\n- The latest correction changed the work plan, so keep following the newest rule: the newer Postgres-only query rule.\n- The open issue is The search handler is still using the outdated SQLite query path.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 83
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Finish the Flask user search endpoint so filtered queries work again.\nStatus: The request parser and pagination fix are already done.\nFile: api/routes/user_search.py\nConstraint: Use Postgres ILIKE filters and do not reintroduce SQLite-specific query code.\nOpen issue: The search handler is still using the outdated SQLite query path.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 64
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Finish the Flask user search endpoint so filtered queries work again. Status: The request parser and pagination fix are already done. File: api/routes/user_search.py Constraint: Use Postgres ILIKE filters and do not reintroduce SQLite-specific query code. Open issue: The search handler is still using the outdated SQLite query path. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - Remember that the failing case is `GET /users/search?q=jo` returning an empty list. - Exact next action: Edit `api/routes/user_search.py` ...",
+      "word_count": 86
+    }
+  },
+  "lc02": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Restore the nightly CSV ingestion worker without changing the upstream file format.\n- Progress: The retry wrapper and checkpoint writes already work.\n- The latest correction changed the work plan, so keep following the newest rule: the no-new-dependency parsing rule.\n- The open issue is The parser fix still points at the wrong dependency choice.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 81
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Restore the nightly CSV ingestion worker without changing the upstream file format.\nStatus: The retry wrapper and checkpoint writes already work.\nFile: workers/csv_ingest.py\nConstraint: Do not add pandas; keep the fix in the standard library parser.\nOpen issue: The parser fix still points at the wrong dependency choice.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 64
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Restore the nightly CSV ingestion worker without changing the upstream file format. Status: The retry wrapper and checkpoint writes already work. File: workers/csv_ingest.py Constraint: Do not add pandas; keep the fix in the standard library parser. Open issue: The parser fix still points at the wrong dependency choice. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - Preserve the exact delimiter override `delimiter='|'` for partner feeds. - Exact next action: Update `workers/csv_ingest.py` to keep the ...",
+      "word_count": 86
+    }
+  },
+  "lc03": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Fix webhook signature verification so billing callbacks stop failing in staging.\n- Progress: Route registration and secret loading already work.\n- The latest correction changed the work plan, so keep following the newest rule: the raw-bytes verification rule.\n- The open issue is The signature check still uses the wrong payload representation.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 78
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Fix webhook signature verification so billing callbacks stop failing in staging.\nStatus: Route registration and secret loading already work.\nFile: middleware/webhook_signature.py\nConstraint: Use the raw request body bytes; do not verify against the parsed JSON string.\nOpen issue: The signature check still uses the wrong payload representation.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 63
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Fix webhook signature verification so billing callbacks stop failing in staging. Status: Route registration and secret loading already work. File: middleware/webhook_signature.py Constraint: Use the raw request body bytes; do not verify against the parsed JSON string. Open issue: The signature check still uses the wrong payload representation. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The exact header to keep is `X-Signature-Timestamp`. - Exact next action: Edit `middleware/webhook_signature.py` to verify the raw body bytes ...",
+      "word_count": 86
+    }
+  },
+  "lc04": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Repair the static site build script so preview deploys succeed again.\n- Progress: Asset copying and preview folder cleanup already work.\n- The latest correction changed the work plan, so keep following the newest rule: the POSIX shell compatibility rule.\n- The open issue is The script still assumes bash-specific syntax.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 77
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Repair the static site build script so preview deploys succeed again.\nStatus: Asset copying and preview folder cleanup already work.\nFile: scripts/build_preview.sh\nConstraint: Keep the build POSIX-shell compatible; do not switch to bash arrays.\nOpen issue: The script still assumes bash-specific syntax.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 58
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Repair the static site build script so preview deploys succeed again. Status: Asset copying and preview folder cleanup already work. File: scripts/build_preview.sh Constraint: Keep the build POSIX-shell compatible; do not switch to bash arrays. Open issue: The script still assumes bash-specific syntax. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The exact environment variable still required is `PREVIEW_BASE_URL`. - Exact next action: Update `scripts/build_preview.sh` to stay POSIX compatible, keep `PREVIEW_BASE_URL`, and rerun `sh scripts/build_preview.sh ...",
+      "word_count": 86
+    }
+  },
+  "lc05": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Fix the Prometheus metrics exporter so queue metrics appear again.\n- Progress: The registry wiring and scrape endpoint already work.\n- The latest correction changed the work plan, so keep following the newest rule: the no-metric-rename rule.\n- The open issue is The queue metric code still points at the wrong name.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 78
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Fix the Prometheus metrics exporter so queue metrics appear again.\nStatus: The registry wiring and scrape endpoint already work.\nFile: observability/queue_metrics.py\nConstraint: Keep the metric names stable; do not rename `queue_depth_total`.\nOpen issue: The queue metric code still points at the wrong name.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 59
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Fix the Prometheus metrics exporter so queue metrics appear again.\nStatus: The registry wiring and scrape endpoint already work.\nFile: observability/queue_metrics.py\nConstraint: Keep the metric names stable; do not rename `queue_depth_total`.\nOpen issue: The queue metric code still points at the wrong name.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.\nExact details:\n- The missing metric is exactly `queue_depth_total`.\n- Exact next action: Edit `observability/queue_metrics.py` to restore `queue_depth_total` without renaming it, then rerun `pytest tests/test_queue_metrics.py -q`.",
+      "word_count": 85
+    }
+  },
+  "lc06": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Repair the OAuth callback handler so the login redirect flow finishes correctly.\n- Progress: Session persistence and redirect mapping already work.\n- The latest correction changed the work plan, so keep following the newest rule: the validate-state-before-exchange rule.\n- The open issue is The callback still applies the wrong ordering for state validation.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 79
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Repair the OAuth callback handler so the login redirect flow finishes correctly.\nStatus: Session persistence and redirect mapping already work.\nFile: auth/callback_handler.py\nConstraint: Validate the `state` parameter before exchanging the auth code.\nOpen issue: The callback still applies the wrong ordering for state validation.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 60
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Repair the OAuth callback handler so the login redirect flow finishes correctly. Status: Session persistence and redirect mapping already work. File: auth/callback_handler.py Constraint: Validate the `state` parameter before exchanging the auth code. Open issue: The callback still applies the wrong ordering for state validation. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The exact redirect path must remain `/auth/callback`. - Exact next action: Edit `auth/callback_handler.py` to validate `state` before code exchange and keep `/auth/callback` ...",
+      "word_count": 86
+    }
+  },
+  "lc07": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Stabilize the email preview command so transactional templates render correctly.\n- Progress: The fixture loader and snapshot refresh script already work.\n- The latest correction changed the work plan, so keep following the newest rule: the autoescaping must stay on rule.\n- The open issue is The preview command still takes the unsafe rendering shortcut.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 81
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Stabilize the email preview command so transactional templates render correctly.\nStatus: The fixture loader and snapshot refresh script already work.\nFile: cli/email_preview.py\nConstraint: Keep Jinja autoescaping enabled; do not disable it for convenience.\nOpen issue: The preview command still takes the unsafe rendering shortcut.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 60
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Stabilize the email preview command so transactional templates render correctly. Status: The fixture loader and snapshot refresh script already work. File: cli/email_preview.py Constraint: Keep Jinja autoescaping enabled; do not disable it for convenience. Open issue: The preview command still takes the unsafe rendering shortcut. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The preview command still needs `--template welcome_email`. - Exact next action: Update `cli/email_preview.py` to keep autoescaping enabled and preserve `--template welcome_email`, then ...",
+      "word_count": 86
+    }
+  },
+  "lc08": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Fix the task scheduler so reminders fire in the correct local timezone.\n- Progress: The reminder selection query already works.\n- The latest correction changed the work plan, so keep following the newest rule: the use-stored-IANA-timezone rule.\n- The open issue is The scheduler still picks the wrong timezone source.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 76
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Fix the task scheduler so reminders fire in the correct local timezone.\nStatus: The reminder selection query already works.\nFile: scheduler/reminder_jobs.py\nConstraint: Use the user's stored IANA timezone; do not fall back to the server timezone.\nOpen issue: The scheduler still picks the wrong timezone source.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 62
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Fix the task scheduler so reminders fire in the correct local timezone. Status: The reminder selection query already works. File: scheduler/reminder_jobs.py Constraint: Use the user's stored IANA timezone; do not fall back to the server timezone. Open issue: The scheduler still picks the wrong timezone source. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The exact timezone field is `user.timezone_name`. - Exact next action: Edit `scheduler/reminder_jobs.py` to read `user.timezone_name` and stop using the server ...",
+      "word_count": 86
+    }
+  },
+  "bd01": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Recover the local compose startup flow for the API and worker stack.\n- Progress: The images build successfully and env files load.\n- The latest correction changed the work plan, so keep following the newest rule: the keep-service-names rule.\n- The open issue is The dev startup instructions still point at the wrong command.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 80
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Recover the local compose startup flow for the API and worker stack.\nStatus: The images build successfully and env files load.\nFile: docker/docker-compose.dev.yml\nConstraint: Keep the existing service names; do not rename containers while debugging.\nOpen issue: The dev startup instructions still point at the wrong command.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 63
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Recover the local compose startup flow for the API and worker stack. Status: The images build successfully and env files load. File: docker/docker-compose.dev.yml Constraint: Keep the existing service names; do not rename containers while debugging. Open issue: The dev startup instructions still point at the wrong command. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The exact startup command is `docker compose -f docker/docker-compose.dev.yml up api worker`. - Exact next action: Use `docker compose ...",
+      "word_count": 86
+    }
+  },
+  "bd02": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Fix the coupon code validator without changing the accepted format.\n- Progress: The parser and normalization step already work.\n- The latest correction changed the work plan, so keep following the newest rule: the keep-the-format-strict rule.\n- The open issue is The exact regex was dropped during refactoring.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 74
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Fix the coupon code validator without changing the accepted format.\nStatus: The parser and normalization step already work.\nFile: validators/coupon_code.py\nConstraint: Do not widen the accepted pattern; the existing format stays strict.\nOpen issue: The exact regex was dropped during refactoring.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 57
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Fix the coupon code validator without changing the accepted format.\nStatus: The parser and normalization step already work.\nFile: validators/coupon_code.py\nConstraint: Do not widen the accepted pattern; the existing format stays strict.\nOpen issue: The exact regex was dropped during refactoring.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.\nExact details:\n- The exact regex is `^[A-Z]{3}-\\d{4}$`.\n- Exact next action: Edit `validators/coupon_code.py` to preserve `^[A-Z]{3}-\\d{4}$` and rerun `pytest tests/test_coupon_code.py -q`.",
+      "word_count": 79
+    }
+  },
+  "bd03": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Repair the environment loader so staging secrets resolve again.\n- Progress: The `.env` file is found and fallback loading works.\n- The latest correction changed the work plan, so keep following the newest rule: the preserve-existing-env-names rule.\n- The open issue is The loader still points at the wrong secret name.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 77
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Repair the environment loader so staging secrets resolve again.\nStatus: The `.env` file is found and fallback loading works.\nFile: config/env_loader.py\nConstraint: Keep the existing secret name mapping; do not rename the env vars.\nOpen issue: The loader still points at the wrong secret name.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 61
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Repair the environment loader so staging secrets resolve again.\nStatus: The `.env` file is found and fallback loading works.\nFile: config/env_loader.py\nConstraint: Keep the existing secret name mapping; do not rename the env vars.\nOpen issue: The loader still points at the wrong secret name.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.\nExact details:\n- The exact variable is `PAYMENTS_SIGNING_SECRET`.\n- Exact next action: Edit `config/env_loader.py` to preserve `PAYMENTS_SIGNING_SECRET` and rerun `pytest tests/test_env_loader.py -q`.",
+      "word_count": 83
+    }
+  },
+  "bd04": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Fix the migration guard so the billing schema patch can run safely.\n- Progress: The schema diff and dry-run path already work.\n- The latest correction changed the work plan, so keep following the newest rule: the additive-only migration rule.\n- The open issue is The guard lost the exact migration identifier during the refactor.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 81
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Fix the migration guard so the billing schema patch can run safely.\nStatus: The schema diff and dry-run path already work.\nFile: db/migrations/guard.py\nConstraint: Do not drop existing rows; keep the migration additive.\nOpen issue: The guard lost the exact migration identifier during the refactor.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 61
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Fix the migration guard so the billing schema patch can run safely. Status: The schema diff and dry-run path already work. File: db/migrations/guard.py Constraint: Do not drop existing rows; keep the migration additive. Open issue: The guard lost the exact migration identifier during the refactor. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The exact migration identifier is `2026_04_add_billing_status_index`. - Exact next action: Edit `db/migrations/guard.py` to preserve the additive guard for `2026_04_add_billing_status_index`, then rerun ...",
+      "word_count": 86
+    }
+  },
+  "bd05": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Restore the search reindex CLI so targeted reindexing works again.\n- Progress: The job queue submission and index existence check already work.\n- The latest correction changed the work plan, so keep following the newest rule: the keep-incremental-reindex rule.\n- The open issue is The CLI dropped the exact target index flag.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 78
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Restore the search reindex CLI so targeted reindexing works again.\nStatus: The job queue submission and index existence check already work.\nFile: cli/reindex_search.py\nConstraint: Keep incremental reindexing; do not force full reindex on every run.\nOpen issue: The CLI dropped the exact target index flag.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 61
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Restore the search reindex CLI so targeted reindexing works again. Status: The job queue submission and index existence check already work. File: cli/reindex_search.py Constraint: Keep incremental reindexing; do not force full reindex on every run. Open issue: The CLI dropped the exact target index flag. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The exact flag is `--index users_v2`. - Exact next action: Edit `cli/reindex_search.py` to preserve incremental mode and keep `--index users_v2`, then ...",
+      "word_count": 86
+    }
+  },
+  "bd06": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Fix the frontend build so the API base URL is injected again.\n- Progress: The fallback config object already works.\n- The latest correction changed the work plan, so keep following the newest rule: the build-time env lookup rule.\n- The open issue is The build step lost the exact environment key.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 78
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Fix the frontend build so the API base URL is injected again.\nStatus: The fallback config object already works.\nFile: frontend/build/config.ts\nConstraint: Keep the environment lookup at build time; do not hardcode the API URL.\nOpen issue: The build step lost the exact environment key.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 61
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Fix the frontend build so the API base URL is injected again. Status: The fallback config object already works. File: frontend/build/config.ts Constraint: Keep the environment lookup at build time; do not hardcode the API URL. Open issue: The build step lost the exact environment key. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The exact key is `VITE_API_BASE_URL`. - Exact next action: Edit `frontend/build/config.ts` to preserve build-time injection of `VITE_API_BASE_URL`, then rerun `npm test ...",
+      "word_count": 86
+    }
+  },
+  "bd07": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Repair the cache invalidation helper so profile updates clear the right key.\n- Progress: The Redis client and mutation hook already fire correctly.\n- The latest correction changed the work plan, so keep following the newest rule: the keep-cache-prefix rule.\n- The open issue is The helper now invalidates the wrong exact key.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 79
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Repair the cache invalidation helper so profile updates clear the right key.\nStatus: The Redis client and mutation hook already fire correctly.\nFile: cache/invalidate_profile.py\nConstraint: Keep the current key prefix; do not rename the cache namespace.\nOpen issue: The helper now invalidates the wrong exact key.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 62
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Repair the cache invalidation helper so profile updates clear the right key. Status: The Redis client and mutation hook already fire correctly. File: cache/invalidate_profile.py Constraint: Keep the current key prefix; do not rename the cache namespace. Open issue: The helper now invalidates the wrong exact key. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The exact key format is `profile:{user_id}:summary`. - Exact next action: Edit `cache/invalidate_profile.py` to keep the `profile:{user_id}:summary` key format and rerun ...",
+      "word_count": 86
+    }
+  },
+  "bd08": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Restore the targeted test helper so smoke suites run quickly again.\n- Progress: The helper already reads changed-file input correctly.\n- The latest correction changed the work plan, so keep following the newest rule: the deterministic-order rule.\n- The open issue is The exact marker expression was simplified too far.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 76
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Restore the targeted test helper so smoke suites run quickly again.\nStatus: The helper already reads changed-file input correctly.\nFile: tools/select_smoke_tests.py\nConstraint: Keep the helper deterministic; do not randomize test order.\nOpen issue: The exact marker expression was simplified too far.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 57
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Restore the targeted test helper so smoke suites run quickly again. Status: The helper already reads changed-file input correctly. File: tools/select_smoke_tests.py Constraint: Keep the helper deterministic; do not randomize test order. Open issue: The exact marker expression was simplified too far. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The exact marker is `-m smoke and not slow`. - Exact next action: Edit `tools/select_smoke_tests.py` to preserve `-m smoke and not slow` and rerun `pytest ...",
+      "word_count": 86
+    }
+  },
+  "ns01": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Finish the billing webhook rollout without repeating already completed setup work.\n- Progress: Schema migration, secret loading, and endpoint registration are already complete.\n- The latest correction changed the work plan, so keep following the newest rule: the schema work is already done.\n- The open issue is Only the 409 retry behavior is still failing.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 82
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Finish the billing webhook rollout without repeating already completed setup work.\nStatus: Schema migration, secret loading, and endpoint registration are already complete.\nFile: billing/webhook_consumer.py\nConstraint: Do not touch the already-migrated schema file.\nOpen issue: Only the 409 retry behavior is still failing.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 58
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Finish the billing webhook rollout without repeating already completed setup work.\nStatus: Schema migration, secret loading, and endpoint registration are already complete.\nFile: billing/webhook_consumer.py\nConstraint: Do not touch the already-migrated schema file.\nOpen issue: Only the 409 retry behavior is still failing.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.\nExact details:\n- The remaining failing test is `tests/test_webhook_consumer.py::test_retries_409`.\n- Exact next action: Edit `billing/webhook_consumer.py` to handle the 409 retry path and rerun `pytest tests/test_webhook_consumer.py -q`.",
+      "word_count": 84
+    }
+  },
+  "ns02": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Finish the markdown export pipeline so scheduled exports stop failing.\n- Progress: Template lookup, scheduler wiring, and storage writes are already fixed.\n- The latest correction changed the work plan, so keep following the newest rule: template loading is already done.\n- The open issue is Only the output formatting step is still broken.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 80
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Finish the markdown export pipeline so scheduled exports stop failing.\nStatus: Template lookup, scheduler wiring, and storage writes are already fixed.\nFile: exports/markdown_export.py\nConstraint: Template loading is already fixed; do not redo that part.\nOpen issue: Only the output formatting step is still broken.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 60
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Finish the markdown export pipeline so scheduled exports stop failing. Status: Template lookup, scheduler wiring, and storage writes are already fixed. File: exports/markdown_export.py Constraint: Template loading is already fixed; do not redo that part. Open issue: Only the output formatting step is still broken. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The remaining issue is the missing `front_matter` block. - Exact next action: Edit `exports/markdown_export.py` to restore the `front_matter` block and rerun `pytest ...",
+      "word_count": 86
+    }
+  },
+  "ns03": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Finish the notification digest job so daily digests send once per user.\n- Progress: Candidate selection, template rendering, and enqueue logic are already working.\n- The latest correction changed the work plan, so keep following the newest rule: candidate selection is already done.\n- The open issue is Only the duplicate-send guard is still missing.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 81
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Finish the notification digest job so daily digests send once per user.\nStatus: Candidate selection, template rendering, and enqueue logic are already working.\nFile: jobs/daily_digest.py\nConstraint: Candidate selection is already correct; do not revisit that query.\nOpen issue: Only the duplicate-send guard is still missing.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 61
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Finish the notification digest job so daily digests send once per user. Status: Candidate selection, template rendering, and enqueue logic are already working. File: jobs/daily_digest.py Constraint: Candidate selection is already correct; do not revisit that query. Open issue: Only the duplicate-send guard is still missing. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The remaining failing case is duplicate sends for `user_id=42`. - Exact next action: Edit `jobs/daily_digest.py` to prevent duplicate sends for `user_id=42` ...",
+      "word_count": 86
+    }
+  },
+  "ns04": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Finish the role sync command so stale group memberships stop persisting.\n- Progress: The mapping table, dry-run mode, and group fetch already work.\n- The latest correction changed the work plan, so keep following the newest rule: role mapping is already done.\n- The open issue is Only stale assignment cleanup is still missing.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 80
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Finish the role sync command so stale group memberships stop persisting.\nStatus: The mapping table, dry-run mode, and group fetch already work.\nFile: cli/sync_roles.py\nConstraint: Role mapping is already correct; do not redo that table.\nOpen issue: Only stale assignment cleanup is still missing.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 60
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Finish the role sync command so stale group memberships stop persisting. Status: The mapping table, dry-run mode, and group fetch already work. File: cli/sync_roles.py Constraint: Role mapping is already correct; do not redo that table. Open issue: Only stale assignment cleanup is still missing. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The remaining issue is that removed groups still leave `editor` assignments behind. - Exact next action: Edit `cli/sync_roles.py` to clear stale `editor` ...",
+      "word_count": 86
+    }
+  },
+  "ns05": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Finish the theme asset cache refresh so new logos appear after publish.\n- Progress: Uploads, manifest writes, and publish hooks are already complete.\n- The latest correction changed the work plan, so keep following the newest rule: uploads are already done.\n- The open issue is Only cache invalidation for the new logo still fails.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 81
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Finish the theme asset cache refresh so new logos appear after publish.\nStatus: Uploads, manifest writes, and publish hooks are already complete.\nFile: themes/refresh_assets.py\nConstraint: Uploads already work; do not revisit the upload path.\nOpen issue: Only cache invalidation for the new logo still fails.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 61
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Finish the theme asset cache refresh so new logos appear after publish. Status: Uploads, manifest writes, and publish hooks are already complete. File: themes/refresh_assets.py Constraint: Uploads already work; do not revisit the upload path. Open issue: Only cache invalidation for the new logo still fails. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The remaining issue is the stale cache key for `logo_dark.svg`. - Exact next action: Edit `themes/refresh_assets.py` to invalidate the stale `logo_dark.svg` ...",
+      "word_count": 86
+    }
+  },
+  "ns06": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Finish the Slack notifier retry flow so transient API failures recover cleanly.\n- Progress: Webhook loading, channel selection, and message formatting already work.\n- The latest correction changed the work plan, so keep following the newest rule: message formatting is already done.\n- The open issue is Only retry behavior on transient failures is still missing.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 82
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Finish the Slack notifier retry flow so transient API failures recover cleanly.\nStatus: Webhook loading, channel selection, and message formatting already work.\nFile: notifications/slack_notifier.py\nConstraint: Message formatting already works; do not rewrite the builder.\nOpen issue: Only retry behavior on transient failures is still missing.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 61
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Finish the Slack notifier retry flow so transient API failures recover cleanly. Status: Webhook loading, channel selection, and message formatting already work. File: notifications/slack_notifier.py Constraint: Message formatting already works; do not rewrite the builder. Open issue: Only retry behavior on transient failures is still missing. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The remaining failure is a missing retry on `429 Too Many Requests`. - Exact next action: Edit `notifications/slack_notifier.py` to add a ...",
+      "word_count": 86
+    }
+  },
+  "ns07": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Finish audit log redaction so secrets stop leaking into stored events.\n- Progress: Event writing, storage, and rotation already work.\n- The latest correction changed the work plan, so keep following the newest rule: event writing is already done.\n- The open issue is Only the redaction rule set still needs the final header case.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 81
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Finish audit log redaction so secrets stop leaking into stored events.\nStatus: Event writing, storage, and rotation already work.\nFile: audit/redact_events.py\nConstraint: Event writing already works; do not touch the writer unless needed.\nOpen issue: Only the redaction rule set still needs the final header case.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 62
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Finish audit log redaction so secrets stop leaking into stored events. Status: Event writing, storage, and rotation already work. File: audit/redact_events.py Constraint: Event writing already works; do not touch the writer unless needed. Open issue: Only the redaction rule set still needs the final header case. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The remaining missing rule is redacting `authorization` headers. - Exact next action: Edit `audit/redact_events.py` to redact `authorization` headers and rerun ...",
+      "word_count": 86
+    }
+  },
+  "ns08": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Finish the thumbnail worker so portrait uploads stop cropping faces.\n- Progress: Upload handling, file persistence, and job enqueueing already work.\n- The latest correction changed the work plan, so keep following the newest rule: upload handling is already done.\n- The open issue is Only the portrait crop preset still fails.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 78
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Finish the thumbnail worker so portrait uploads stop cropping faces.\nStatus: Upload handling, file persistence, and job enqueueing already work.\nFile: media/thumbnail_worker.py\nConstraint: Upload handling already works; do not revisit the uploader.\nOpen issue: Only the portrait crop preset still fails.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 57
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Finish the thumbnail worker so portrait uploads stop cropping faces. Status: Upload handling, file persistence, and job enqueueing already work. File: media/thumbnail_worker.py Constraint: Upload handling already works; do not revisit the uploader. Open issue: Only the portrait crop preset still fails. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The remaining failing case is the portrait crop preset `cover_portrait`. - Exact next action: Edit `media/thumbnail_worker.py` to fix the `cover_portrait` crop path and rerun `pytest ...",
+      "word_count": 86
+    }
+  },
+  "lc01_hard": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Finish the Flask user search endpoint so filtered queries work again.\n- Progress: The request parser and pagination fix are already done.\n- The latest correction changed the work plan, so keep following the newest rule: the newer Postgres-only query rule.\n- The open issue is The search handler is still using the outdated SQLite query path.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 83
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Finish the Flask user search endpoint so filtered queries work again.\nStatus: The request parser and pagination fix are already done.\nFile: api/routes/user_search.py\nConstraint: Use Postgres ILIKE filters and do not reintroduce SQLite-specific query code.\nOpen issue: The search handler is still using the outdated SQLite query path.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 64
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Finish the Flask user search endpoint so filtered queries work again. Status: The request parser and pagination fix are already done. File: api/routes/user_search.py Constraint: Use Postgres ILIKE filters and do not reintroduce SQLite-specific query code. Open issue: The search handler is still using the outdated SQLite query path. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - Remember that the failing case is `GET /users/search?q=jo` returning an empty list. - Exact next action: Edit `api/routes/user_search.py` ...",
+      "word_count": 86
+    }
+  },
+  "lc02_hard": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Restore the nightly CSV ingestion worker without changing the upstream file format.\n- Progress: The retry wrapper and checkpoint writes already work.\n- The latest correction changed the work plan, so keep following the newest rule: the no-new-dependency parsing rule.\n- The open issue is The parser fix still points at the wrong dependency choice.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 81
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Restore the nightly CSV ingestion worker without changing the upstream file format.\nStatus: The retry wrapper and checkpoint writes already work.\nFile: workers/csv_ingest.py\nConstraint: Do not add pandas; keep the fix in the standard library parser.\nOpen issue: The parser fix still points at the wrong dependency choice.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 64
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Restore the nightly CSV ingestion worker without changing the upstream file format. Status: The retry wrapper and checkpoint writes already work. File: workers/csv_ingest.py Constraint: Do not add pandas; keep the fix in the standard library parser. Open issue: The parser fix still points at the wrong dependency choice. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - Preserve the exact delimiter override `delimiter='|'` for partner feeds. - Exact next action: Update `workers/csv_ingest.py` to keep the ...",
+      "word_count": 86
+    }
+  },
+  "bd01_hard": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Recover the local compose startup flow for the API and worker stack.\n- Progress: The images build successfully and env files load.\n- The latest correction changed the work plan, so keep following the newest rule: the keep-service-names rule.\n- The open issue is The dev startup instructions still point at the wrong command.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 80
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Recover the local compose startup flow for the API and worker stack.\nStatus: The images build successfully and env files load.\nFile: docker/docker-compose.dev.yml\nConstraint: Keep the existing service names; do not rename containers while debugging.\nOpen issue: The dev startup instructions still point at the wrong command.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 63
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Recover the local compose startup flow for the API and worker stack. Status: The images build successfully and env files load. File: docker/docker-compose.dev.yml Constraint: Keep the existing service names; do not rename containers while debugging. Open issue: The dev startup instructions still point at the wrong command. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The exact startup command is `docker compose -f docker/docker-compose.dev.yml up api worker`. - Exact next action: Use `docker compose ...",
+      "word_count": 86
+    }
+  },
+  "bd02_hard": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Fix the coupon code validator without changing the accepted format.\n- Progress: The parser and normalization step already work.\n- The latest correction changed the work plan, so keep following the newest rule: the keep-the-format-strict rule.\n- The open issue is The exact regex was dropped during refactoring.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 74
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Fix the coupon code validator without changing the accepted format.\nStatus: The parser and normalization step already work.\nFile: validators/coupon_code.py\nConstraint: Do not widen the accepted pattern; the existing format stays strict.\nOpen issue: The exact regex was dropped during refactoring.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 57
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Fix the coupon code validator without changing the accepted format.\nStatus: The parser and normalization step already work.\nFile: validators/coupon_code.py\nConstraint: Do not widen the accepted pattern; the existing format stays strict.\nOpen issue: The exact regex was dropped during refactoring.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.\nExact details:\n- The exact regex is `^[A-Z]{3}-\\d{4}$`.\n- Exact next action: Edit `validators/coupon_code.py` to preserve `^[A-Z]{3}-\\d{4}$` and rerun `pytest tests/test_coupon_code.py -q`.",
+      "word_count": 79
+    }
+  },
+  "ns01_hard": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Finish the billing webhook rollout without repeating already completed setup work.\n- Progress: Schema migration, secret loading, and endpoint registration are already complete.\n- The latest correction changed the work plan, so keep following the newest rule: the schema work is already done.\n- The open issue is Only the 409 retry behavior is still failing.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 82
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Finish the billing webhook rollout without repeating already completed setup work.\nStatus: Schema migration, secret loading, and endpoint registration are already complete.\nFile: billing/webhook_consumer.py\nConstraint: Do not touch the already-migrated schema file.\nOpen issue: Only the 409 retry behavior is still failing.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 58
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Finish the billing webhook rollout without repeating already completed setup work.\nStatus: Schema migration, secret loading, and endpoint registration are already complete.\nFile: billing/webhook_consumer.py\nConstraint: Do not touch the already-migrated schema file.\nOpen issue: Only the 409 retry behavior is still failing.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.\nExact details:\n- The remaining failing test is `tests/test_webhook_consumer.py::test_retries_409`.\n- Exact next action: Edit `billing/webhook_consumer.py` to handle the 409 retry path and rerun `pytest tests/test_webhook_consumer.py -q`.",
+      "word_count": 84
+    }
+  },
+  "ns02_hard": {
+    "budget_words": 85,
+    "C2_bullet_summary": {
+      "text": "- Goal: Finish the markdown export pipeline so scheduled exports stop failing.\n- Progress: Template lookup, scheduler wiring, and storage writes are already fixed.\n- The latest correction changed the work plan, so keep following the newest rule: template loading is already done.\n- The open issue is Only the output formatting step is still broken.\n- There is still one brittle exact detail from earlier notes that matters.\n- Next: continue the pending fix and rerun the relevant verification.",
+      "word_count": 80
+    },
+    "C3_structured_state_sheet": {
+      "text": "Goal: Finish the markdown export pipeline so scheduled exports stop failing.\nStatus: Template lookup, scheduler wiring, and storage writes are already fixed.\nFile: exports/markdown_export.py\nConstraint: Template loading is already fixed; do not redo that part.\nOpen issue: Only the output formatting step is still broken.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.",
+      "word_count": 60
+    },
+    "C4_hybrid_state_sheet": {
+      "text": "Goal: Finish the markdown export pipeline so scheduled exports stop failing. Status: Template lookup, scheduler wiring, and storage writes are already fixed. File: exports/markdown_export.py Constraint: Template loading is already fixed; do not redo that part. Open issue: Only the output formatting step is still broken. Next step: continue the pending fix in the target file, then rerun the relevant verification. Exact details: - The remaining issue is the missing `front_matter` block. - Exact next action: Edit `exports/markdown_export.py` to restore the `front_matter` block and rerun `pytest ...",
+      "word_count": 86
+    }
+  }
+}

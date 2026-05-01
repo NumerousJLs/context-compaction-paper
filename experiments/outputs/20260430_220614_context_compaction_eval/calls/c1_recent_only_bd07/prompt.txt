@@ -1,0 +1,36 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+RECENT TURNS ONLY:
+Turn 1 [User]: We compacted the earlier session because the chat was getting long.
+Turn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.
+Turn 3 [User]: Please recover the current state exactly before taking the next step.
+
+GOAL OPTIONS:
+  A: Replace the cache layer with a completely new backend.
+  B: Add a new admin page for cache stats.
+  C: Repair the cache invalidation helper so profile updates clear the right key.
+
+FILE OPTIONS:
+  A: cache/invalidate_profile.py
+  B: cache/client.py
+  C: tests/test_invalidate_profile.py
+
+CONSTRAINT OPTIONS:
+  A: Rename the cache namespace while fixing invalidation.
+  B: Keep the current key prefix; do not rename the cache namespace.
+  C: Skip invalidation and shorten the TTL instead.
+
+DETAIL OPTIONS:
+  A: The exact key format is `profile:{user_id}:summary`.
+  B: The old key format was `profiles:{user_id}`.
+  C: The issue is a CSS problem in the admin cache page.
+
+NEXT_STEP OPTIONS:
+  A: Edit `cache/client.py` and rename the namespace to `profiles:{user_id}`.
+  B: Ignore invalidation and build a cache stats page.
+  C: Edit `cache/invalidate_profile.py` to keep the `profile:{user_id}:summary` key format and rerun `pytest tests/test_invalidate_profile.py -q`.
+
+Return strict JSON only.

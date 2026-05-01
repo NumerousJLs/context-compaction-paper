@@ -1,0 +1,36 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+RECENT TURNS ONLY:
+Turn 1 [User]: We compacted the earlier session because the chat was getting long.
+Turn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.
+Turn 3 [User]: Please recover the current state exactly before taking the next step.
+
+GOAL OPTIONS:
+  A: Restore the targeted test helper so smoke suites run quickly again.
+  B: Replace pytest with a new test framework first.
+  C: Build a dashboard for flaky tests.
+
+FILE OPTIONS:
+  A: tools/run_tests.py
+  B: tests/test_select_smoke_tests.py
+  C: tools/select_smoke_tests.py
+
+CONSTRAINT OPTIONS:
+  A: Randomize smoke tests to spread coverage around.
+  B: Keep the helper deterministic; do not randomize test order.
+  C: Run the full suite every time for consistency.
+
+DETAIL OPTIONS:
+  A: The old marker was `-m smoke`.
+  B: The issue is a typo in the testing dashboard title.
+  C: The exact marker is `-m smoke and not slow`.
+
+NEXT_STEP OPTIONS:
+  A: Edit `tools/run_tests.py` and randomize plain `-m smoke` runs.
+  B: Edit `tools/select_smoke_tests.py` to preserve `-m smoke and not slow` and rerun `pytest tests/test_select_smoke_tests.py -q`.
+  C: Ignore the helper and build a flaky-test dashboard.
+
+Return strict JSON only.

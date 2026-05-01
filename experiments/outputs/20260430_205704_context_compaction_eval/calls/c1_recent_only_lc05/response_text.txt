@@ -1,0 +1,11 @@
+Here is the recovered session state in JSON format:
+
+```
+{
+    "goal_id": "B",
+    "file_id": "B",
+    "constraint_id": "C",
+    "detail_id": "A",
+    "next_step_id": "C"
+}
+```

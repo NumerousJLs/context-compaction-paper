@@ -1,0 +1,46 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+COMPACTED MEMORY:
+Goal: Finish the thumbnail worker so portrait uploads stop cropping faces.
+Status: Upload handling, file persistence, and job enqueueing already work.
+File: media/thumbnail_worker.py
+Constraint: Upload handling already works; do not revisit the uploader.
+Open issue: Only the portrait crop preset still fails.
+Next step: Edit `media/thumbnail_worker.py` to fix the `cover_portrait` crop path and rerun `pytest tests/test_thumbnail_worker.py -q`.
+Exact details:
+- The remaining failing case is the portrait crop preset `cover_portrait`.
+
+RECENT TURNS:
+Turn 1 [User]: We compacted the earlier session because the chat was getting long.
+Turn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.
+Turn 3 [User]: Please recover the current state exactly before taking the next step.
+
+GOAL OPTIONS:
+  A: Build a whole new media gallery UI.
+  B: Switch all image processing to a hosted service.
+  C: Finish the thumbnail worker so portrait uploads stop cropping faces.
+
+FILE OPTIONS:
+  A: media/upload_handler.py
+  B: media/thumbnail_worker.py
+  C: tests/test_thumbnail_worker.py
+
+CONSTRAINT OPTIONS:
+  A: Upload handling already works; do not revisit the uploader.
+  B: Redo upload handling before touching resizing logic.
+  C: Pause worker fixes and design a media gallery.
+
+DETAIL OPTIONS:
+  A: The remaining issue is a missing upload MIME check.
+  B: The remaining failing case is the portrait crop preset `cover_portrait`.
+  C: The actual issue is a spacing bug in the gallery page.
+
+NEXT_STEP OPTIONS:
+  A: Edit `media/thumbnail_worker.py` to fix the `cover_portrait` crop path and rerun `pytest tests/test_thumbnail_worker.py -q`.
+  B: Re-edit `media/upload_handler.py` even though uploads already work.
+  C: Ignore the worker and design a media gallery.
+
+Return strict JSON only.

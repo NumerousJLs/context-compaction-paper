@@ -1,0 +1,44 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+COMPACTED MEMORY:
+Goal: Finish audit log redaction so secrets stop leaking into stored events.
+Status: Event writing, storage, and rotation already work.
+File: audit/redact_events.py
+Constraint: Event writing already works; do not touch the writer unless needed.
+Open issue: Only the redaction rule set still needs the final header case.
+Next step: continue the pending fix in the target file, then rerun the relevant verification.
+
+RECENT TURNS:
+Turn 1 [User]: We compacted the earlier session because the chat was getting long.
+Turn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.
+Turn 3 [User]: Please recover the current state exactly before taking the next step.
+
+GOAL OPTIONS:
+  A: Create an audit log viewer UI first.
+  B: Finish audit log redaction so secrets stop leaking into stored events.
+  C: Replace the entire audit system with a vendor product.
+
+FILE OPTIONS:
+  A: audit/redact_events.py
+  B: audit/write_events.py
+  C: tests/test_redact_events.py
+
+CONSTRAINT OPTIONS:
+  A: Rebuild the writer before touching redaction rules.
+  B: Pause redaction work and build a log viewer.
+  C: Event writing already works; do not touch the writer unless needed.
+
+DETAIL OPTIONS:
+  A: The remaining missing rule is redacting `authorization` headers.
+  B: The remaining issue is a write timeout in the event writer.
+  C: The actual issue is the viewer color palette.
+
+NEXT_STEP OPTIONS:
+  A: Re-edit `audit/write_events.py` even though event writing already works.
+  B: Ignore redaction and build an audit log viewer.
+  C: Edit `audit/redact_events.py` to redact `authorization` headers and rerun `pytest tests/test_redact_events.py -q`.
+
+Return strict JSON only.

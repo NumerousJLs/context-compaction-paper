@@ -1,0 +1,44 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+COMPACTED MEMORY:
+Goal: Fix the migration guard so the billing schema patch can run safely.
+Status: The schema diff and dry-run path already work.
+File: db/migrations/guard.py
+Constraint: Do not drop existing rows; keep the migration additive.
+Open issue: The guard lost the exact migration identifier during the refactor.
+Next step: Edit `db/migrations/guard.py` to preserve the additive guard for `2026_04_add_billing_status_index`, then rerun `pytest tests/test_migration_guard.py -q`.
+
+RECENT TURNS:
+Turn 1 [User]: We compacted the earlier session because the chat was getting long.
+Turn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.
+Turn 3 [User]: Please recover the current state exactly before taking the next step.
+
+GOAL OPTIONS:
+  A: Rewrite the whole billing schema from scratch.
+  B: Make a visual migration status page first.
+  C: Fix the migration guard so the billing schema patch can run safely.
+
+FILE OPTIONS:
+  A: db/migrations/runner.py
+  B: db/migrations/guard.py
+  C: tests/test_migration_guard.py
+
+CONSTRAINT OPTIONS:
+  A: Do not drop existing rows; keep the migration additive.
+  B: Delete old rows to make the schema patch simpler.
+  C: Skip the guard and patch the database manually.
+
+DETAIL OPTIONS:
+  A: The old migration id was `2026_03_drop_invoice_flags`.
+  B: The exact migration identifier is `2026_04_add_billing_status_index`.
+  C: The issue is just a stale screenshot in the runbook.
+
+NEXT_STEP OPTIONS:
+  A: Edit `db/migrations/guard.py` to preserve the additive guard for `2026_04_add_billing_status_index`, then rerun `pytest tests/test_migration_guard.py -q`.
+  B: Edit `db/migrations/runner.py` and delete old rows for `2026_03_drop_invoice_flags`.
+  C: Ignore the guard and update the runbook screenshot.
+
+Return strict JSON only.

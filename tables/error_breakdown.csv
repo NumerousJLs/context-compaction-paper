@@ -1,0 +1,6 @@
+condition,error_type,count
+C1_recent_only,blended_old_and_new_state,4
+C1_recent_only,lost_constraint,4
+C1_recent_only,lost_exact_detail,2
+C1_recent_only,wrong_file,3
+C2_bullet_summary,wrong_file,9

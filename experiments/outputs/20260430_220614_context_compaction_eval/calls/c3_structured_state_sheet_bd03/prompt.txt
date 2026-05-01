@@ -1,0 +1,44 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+COMPACTED MEMORY:
+Goal: Repair the environment loader so staging secrets resolve again.
+Status: The `.env` file is found and fallback loading works.
+File: config/env_loader.py
+Constraint: Keep the existing secret name mapping; do not rename the env vars.
+Open issue: The loader still points at the wrong secret name.
+Next step: continue the pending fix in the target file, then rerun the relevant verification.
+
+RECENT TURNS:
+Turn 1 [User]: We compacted the earlier session because the chat was getting long.
+Turn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.
+Turn 3 [User]: Please recover the current state exactly before taking the next step.
+
+GOAL OPTIONS:
+  A: Move secrets management to a new vendor before fixing the loader.
+  B: Repair the environment loader so staging secrets resolve again.
+  C: Create a security dashboard for missing env vars.
+
+FILE OPTIONS:
+  A: config/env_loader.py
+  B: config/settings.py
+  C: tests/test_env_loader.py
+
+CONSTRAINT OPTIONS:
+  A: Rename the env vars to a cleaner prefix while fixing the bug.
+  B: Hardcode the secret locally to unblock staging.
+  C: Keep the existing secret name mapping; do not rename the env vars.
+
+DETAIL OPTIONS:
+  A: The exact variable is `PAYMENTS_SIGNING_SECRET`.
+  B: The old variable was `PAYMENT_SECRET`.
+  C: The main issue is a spacing bug in the settings panel.
+
+NEXT_STEP OPTIONS:
+  A: Edit `config/settings.py` and rename the variable to `PAYMENT_SECRET`.
+  B: Ignore the loader and build a dashboard for missing env vars.
+  C: Edit `config/env_loader.py` to preserve `PAYMENTS_SIGNING_SECRET` and rerun `pytest tests/test_env_loader.py -q`.
+
+Return strict JSON only.

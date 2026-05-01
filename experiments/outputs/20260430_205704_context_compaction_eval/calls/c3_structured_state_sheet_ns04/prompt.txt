@@ -1,0 +1,44 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+COMPACTED MEMORY:
+Goal: Finish the role sync command so stale group memberships stop persisting.
+Status: The mapping table, dry-run mode, and group fetch already work.
+File: cli/sync_roles.py
+Constraint: Role mapping is already correct; do not redo that table.
+Open issue: Only stale assignment cleanup is still missing.
+Next step: Edit `cli/sync_roles.py` to clear stale `editor` assignments and rerun `pytest tests/test_sync_roles.py -q`.
+
+RECENT TURNS:
+Turn 1 [User]: We compacted the earlier session because the chat was getting long.
+Turn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.
+Turn 3 [User]: Please recover the current state exactly before taking the next step.
+
+GOAL OPTIONS:
+  A: Build a new admin page for roles first.
+  B: Finish the role sync command so stale group memberships stop persisting.
+  C: Replace the role system with an external provider.
+
+FILE OPTIONS:
+  A: auth/role_mapping.py
+  B: tests/test_sync_roles.py
+  C: cli/sync_roles.py
+
+CONSTRAINT OPTIONS:
+  A: Role mapping is already correct; do not redo that table.
+  B: Rework the role mapping table before touching the sync path.
+  C: Pause sync work and redesign role management.
+
+DETAIL OPTIONS:
+  A: The remaining issue is a missing role mapping entry.
+  B: The actual problem is a typo in the admin page heading.
+  C: The remaining issue is that removed groups still leave `editor` assignments behind.
+
+NEXT_STEP OPTIONS:
+  A: Re-edit `auth/role_mapping.py` even though the mapping table is already correct.
+  B: Edit `cli/sync_roles.py` to clear stale `editor` assignments and rerun `pytest tests/test_sync_roles.py -q`.
+  C: Ignore the CLI and redesign role management.
+
+Return strict JSON only.

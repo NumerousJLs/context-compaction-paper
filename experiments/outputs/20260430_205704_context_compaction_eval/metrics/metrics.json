@@ -1,0 +1,198 @@
+{
+  "condition_rows": [
+    {
+      "condition": "C0_full_transcript",
+      "n": 24,
+      "continuity_score": 1.0,
+      "avg_prompt_tokens": 611.6666666666666,
+      "avg_elapsed_seconds": 4.440904329220454,
+      "goal_accuracy": 1.0,
+      "file_accuracy": 1.0,
+      "constraint_accuracy": 1.0,
+      "detail_accuracy": 1.0,
+      "next_step_accuracy": 1.0,
+      "parse_failures": 0
+    },
+    {
+      "condition": "C1_recent_only",
+      "n": 24,
+      "continuity_score": 0.7666666666666666,
+      "avg_prompt_tokens": 371.5416666666667,
+      "avg_elapsed_seconds": 3.5172505180040994,
+      "goal_accuracy": 0.8333333333333334,
+      "file_accuracy": 0.625,
+      "constraint_accuracy": 0.8333333333333334,
+      "detail_accuracy": 0.7083333333333334,
+      "next_step_accuracy": 0.8333333333333334,
+      "parse_failures": 0
+    },
+    {
+      "condition": "C2_bullet_summary",
+      "n": 24,
+      "continuity_score": 0.9500000000000001,
+      "avg_prompt_tokens": 458.0416666666667,
+      "avg_elapsed_seconds": 3.8601132134596505,
+      "goal_accuracy": 1.0,
+      "file_accuracy": 0.7916666666666666,
+      "constraint_accuracy": 0.9583333333333334,
+      "detail_accuracy": 1.0,
+      "next_step_accuracy": 1.0,
+      "parse_failures": 0
+    },
+    {
+      "condition": "C3_structured_state_sheet",
+      "n": 24,
+      "continuity_score": 0.975,
+      "avg_prompt_tokens": 474.4583333333333,
+      "avg_elapsed_seconds": 3.8590916891892753,
+      "goal_accuracy": 1.0,
+      "file_accuracy": 1.0,
+      "constraint_accuracy": 1.0,
+      "detail_accuracy": 0.875,
+      "next_step_accuracy": 1.0,
+      "parse_failures": 0
+    },
+    {
+      "condition": "C4_hybrid_state_sheet",
+      "n": 24,
+      "continuity_score": 1.0,
+      "avg_prompt_tokens": 492.0416666666667,
+      "avg_elapsed_seconds": 3.6318694353103638,
+      "goal_accuracy": 1.0,
+      "file_accuracy": 1.0,
+      "constraint_accuracy": 1.0,
+      "detail_accuracy": 1.0,
+      "next_step_accuracy": 1.0,
+      "parse_failures": 0
+    }
+  ],
+  "family_rows": [
+    {
+      "condition": "C0_full_transcript",
+      "family": "latest_constraint",
+      "n": 8,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C1_recent_only",
+      "family": "latest_constraint",
+      "n": 8,
+      "continuity_score": 0.65
+    },
+    {
+      "condition": "C2_bullet_summary",
+      "family": "latest_constraint",
+      "n": 8,
+      "continuity_score": 0.925
+    },
+    {
+      "condition": "C3_structured_state_sheet",
+      "family": "latest_constraint",
+      "n": 8,
+      "continuity_score": 0.925
+    },
+    {
+      "condition": "C4_hybrid_state_sheet",
+      "family": "latest_constraint",
+      "n": 8,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C0_full_transcript",
+      "family": "brittle_detail",
+      "n": 8,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C1_recent_only",
+      "family": "brittle_detail",
+      "n": 8,
+      "continuity_score": 0.775
+    },
+    {
+      "condition": "C2_bullet_summary",
+      "family": "brittle_detail",
+      "n": 8,
+      "continuity_score": 0.95
+    },
+    {
+      "condition": "C3_structured_state_sheet",
+      "family": "brittle_detail",
+      "n": 8,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C4_hybrid_state_sheet",
+      "family": "brittle_detail",
+      "n": 8,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C0_full_transcript",
+      "family": "next_step_continuity",
+      "n": 8,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C1_recent_only",
+      "family": "next_step_continuity",
+      "n": 8,
+      "continuity_score": 0.875
+    },
+    {
+      "condition": "C2_bullet_summary",
+      "family": "next_step_continuity",
+      "n": 8,
+      "continuity_score": 0.975
+    },
+    {
+      "condition": "C3_structured_state_sheet",
+      "family": "next_step_continuity",
+      "n": 8,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C4_hybrid_state_sheet",
+      "family": "next_step_continuity",
+      "n": 8,
+      "continuity_score": 1.0
+    }
+  ],
+  "error_rows": [
+    {
+      "condition": "C1_recent_only",
+      "error_type": "blended_old_and_new_state",
+      "count": 2
+    },
+    {
+      "condition": "C1_recent_only",
+      "error_type": "lost_constraint",
+      "count": 1
+    },
+    {
+      "condition": "C1_recent_only",
+      "error_type": "lost_exact_detail",
+      "count": 3
+    },
+    {
+      "condition": "C1_recent_only",
+      "error_type": "wrong_file",
+      "count": 8
+    },
+    {
+      "condition": "C2_bullet_summary",
+      "error_type": "lost_constraint",
+      "count": 1
+    },
+    {
+      "condition": "C2_bullet_summary",
+      "error_type": "wrong_file",
+      "count": 5
+    },
+    {
+      "condition": "C3_structured_state_sheet",
+      "error_type": "lost_exact_detail",
+      "count": 3
+    }
+  ]
+}

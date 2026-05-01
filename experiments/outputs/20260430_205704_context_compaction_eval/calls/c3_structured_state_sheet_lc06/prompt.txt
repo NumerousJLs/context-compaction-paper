@@ -1,0 +1,44 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+COMPACTED MEMORY:
+Goal: Repair the OAuth callback handler so the login redirect flow finishes correctly.
+Status: Session persistence and redirect mapping already work.
+File: auth/callback_handler.py
+Constraint: Validate the `state` parameter before exchanging the auth code.
+Open issue: The callback still applies the wrong ordering for state validation.
+Next step: Edit `auth/callback_handler.py` to validate `state` before code exchange and keep `/auth/callback`, then rerun `pytest tests/test_callback_handler.py -q`.
+
+RECENT TURNS:
+Turn 1 [User]: We compacted the earlier session because the chat was getting long.
+Turn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.
+Turn 3 [User]: Please recover the current state exactly before taking the next step.
+
+GOAL OPTIONS:
+  A: Build a new login screen animation for the app.
+  B: Replace OAuth with SAML before fixing the callback.
+  C: Repair the OAuth callback handler so the login redirect flow finishes correctly.
+
+FILE OPTIONS:
+  A: auth/session_store.py
+  B: auth/callback_handler.py
+  C: tests/test_callback_handler.py
+
+CONSTRAINT OPTIONS:
+  A: Validate the `state` parameter before exchanging the auth code.
+  B: Exchange the auth code first and validate `state` later.
+  C: Skip state validation in staging for easier testing.
+
+DETAIL OPTIONS:
+  A: The only path that matters is `/auth/login`.
+  B: The exact redirect path must remain `/auth/callback`.
+  C: The problem is a spacing issue in the login button text.
+
+NEXT_STEP OPTIONS:
+  A: Edit `auth/callback_handler.py` to validate `state` before code exchange and keep `/auth/callback`, then rerun `pytest tests/test_callback_handler.py -q`.
+  B: Edit `auth/session_store.py` and keep validating `state` later.
+  C: Skip the backend and animate the login screen.
+
+Return strict JSON only.

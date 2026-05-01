@@ -1,0 +1,38 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+RECENT TURNS ONLY:
+Turn 1 [User]: I found a stale reminder from an abandoned branch. It says to work in `workers/import_runner.py` and to use this old direction: Add pandas and rewrite the parser around DataFrames.
+Turn 2 [Tool]: Stale reminder detail that may be wrong: The only important flag is `delimiter=','` for local tests.
+Turn 3 [Assistant]: That note looks stale. I should not trust the reminder file, rule, detail, or next step until I reconcile it with the earlier session.
+Turn 4 [User]: Exactly. Recover the real final state from the earlier context, not the stale reminder, before you continue.
+Turn 5 [Assistant]: I will ignore the stale reminder unless the earlier context confirms this old next step: Rewrite the importer with pandas in `workers/import_runner.py`.
+
+GOAL OPTIONS:
+  A: Migrate the ingestion pipeline to Avro first.
+  B: Restore the nightly CSV ingestion worker without changing the upstream file format.
+  C: Add a brand new upload UI for CSV imports.
+
+FILE OPTIONS:
+  A: workers/import_runner.py
+  B: scripts/replay_csv_job.sh
+  C: workers/csv_ingest.py
+
+CONSTRAINT OPTIONS:
+  A: Do not add pandas; keep the fix in the standard library parser.
+  B: Add pandas and rewrite the parser around DataFrames.
+  C: Switch the job to read Parquet instead of CSV.
+
+DETAIL OPTIONS:
+  A: The only important flag is `delimiter=','` for local tests.
+  B: The main problem is an S3 bucket policy change.
+  C: Preserve the exact delimiter override `delimiter='|'` for partner feeds.
+
+NEXT_STEP OPTIONS:
+  A: Rewrite the importer with pandas in `workers/import_runner.py`.
+  B: Update `workers/csv_ingest.py` to keep the standard library parser, preserve `delimiter='|'`, and rerun `python scripts/replay_csv_job.sh --sample partner_feed`.
+  C: Ignore the parser and work on the upload UI instead.
+
+Return strict JSON only.

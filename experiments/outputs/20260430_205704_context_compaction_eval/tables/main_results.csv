@@ -1,0 +1,6 @@
+condition,n,continuity_score,avg_prompt_tokens,avg_elapsed_seconds,goal_accuracy,file_accuracy,constraint_accuracy,detail_accuracy,next_step_accuracy,parse_failures
+C0_full_transcript,24,1.0000,611.6667,4.4409,1.0000,1.0000,1.0000,1.0000,1.0000,0
+C1_recent_only,24,0.7667,371.5417,3.5173,0.8333,0.6250,0.8333,0.7083,0.8333,0
+C2_bullet_summary,24,0.9500,458.0417,3.8601,1.0000,0.7917,0.9583,1.0000,1.0000,0
+C3_structured_state_sheet,24,0.9750,474.4583,3.8591,1.0000,1.0000,1.0000,0.8750,1.0000,0
+C4_hybrid_state_sheet,24,1.0000,492.0417,3.6319,1.0000,1.0000,1.0000,1.0000,1.0000,0

@@ -1,0 +1,46 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+EARLIER SESSION:
+Turn 1 [User]: We need to finish the regex validator. Fix the coupon code validator without changing the accepted format.
+Turn 2 [Assistant]: My first pass was to work in `routes/coupons.py` and follow this rule: Accept any alphanumeric string to reduce user friction.
+Turn 3 [Tool]: Status note: The parser and normalization step already work.
+Turn 4 [User]: Do not lose the key detail from this task: The exact regex is `^[A-Z]{3}-\d{4}$`.
+Turn 5 [Assistant]: Understood. The remaining blocker seems to be: The exact regex was dropped during refactoring.
+Turn 6 [User]: Correction: the active file is actually `validators/coupon_code.py`. Also, the latest rule is: Do not widen the accepted pattern; the existing format stays strict.
+Turn 7 [Assistant]: Thanks. I will update the plan around `validators/coupon_code.py` and keep in mind that the exact brittle detail matters more than the earlier rough description.
+Turn 8 [Tool]: Open issue recap: The exact regex was dropped during refactoring.
+
+RECENT TURNS:
+Turn 1 [User]: We compacted the earlier session because the chat was getting long.
+Turn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.
+Turn 3 [User]: Please recover the current state exactly before taking the next step.
+
+GOAL OPTIONS:
+  A: Fix the coupon code validator without changing the accepted format.
+  B: Rebrand coupon codes with a brand-new format.
+  C: Build a coupon admin UI first.
+
+FILE OPTIONS:
+  A: routes/coupons.py
+  B: tests/test_coupon_code.py
+  C: validators/coupon_code.py
+
+CONSTRAINT OPTIONS:
+  A: Accept any alphanumeric string to reduce user friction.
+  B: Do not widen the accepted pattern; the existing format stays strict.
+  C: Move validation into the browser first.
+
+DETAIL OPTIONS:
+  A: The old regex was `^[A-Z0-9]{4,8}$`.
+  B: The issue is a color mismatch in the coupon modal.
+  C: The exact regex is `^[A-Z]{3}-\d{4}$`.
+
+NEXT_STEP OPTIONS:
+  A: Edit `routes/coupons.py` and widen the format to any alphanumeric string.
+  B: Edit `validators/coupon_code.py` to preserve `^[A-Z]{3}-\d{4}$` and rerun `pytest tests/test_coupon_code.py -q`.
+  C: Skip validation and restyle the coupon modal.
+
+Return strict JSON only.

@@ -1,0 +1,11 @@
+{
+  "model": "qwen3.5:4b",
+  "prompt": "Recover the current coding-session state from the context below.\nUse only the provided session context and recent turns.\nChoose exactly one option ID for each field.\nReturn JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.\n\nCOMPACTED MEMORY:\nGoal: Fix the migration guard so the billing schema patch can run safely.\nStatus: The schema diff and dry-run path already work.\nFile: db/migrations/guard.py\nConstraint: Do not drop existing rows; keep the migration additive.\nOpen issue: The guard lost the exact migration identifier during the refactor.\nNext step: continue the pending fix in the target file, then rerun the relevant verification.\n\nRECENT TURNS:\nTurn 1 [User]: We compacted the earlier session because the chat was getting long.\nTurn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.\nTurn 3 [User]: Please recover the current state exactly before taking the next step.\n\nGOAL OPTIONS:\n  A: Rewrite the whole billing schema from scratch.\n  B: Make a visual migration status page first.\n  C: Fix the migration guard so the billing schema patch can run safely.\n\nFILE OPTIONS:\n  A: db/migrations/runner.py\n  B: db/migrations/guard.py\n  C: tests/test_migration_guard.py\n\nCONSTRAINT OPTIONS:\n  A: Do not drop existing rows; keep the migration additive.\n  B: Delete old rows to make the schema patch simpler.\n  C: Skip the guard and patch the database manually.\n\nDETAIL OPTIONS:\n  A: The old migration id was `2026_03_drop_invoice_flags`.\n  B: The exact migration identifier is `2026_04_add_billing_status_index`.\n  C: The issue is just a stale screenshot in the runbook.\n\nNEXT_STEP OPTIONS:\n  A: Edit `db/migrations/guard.py` to preserve the additive guard for `2026_04_add_billing_status_index`, then rerun `pytest tests/test_migration_guard.py -q`.\n  B: Edit `db/migrations/runner.py` and delete old rows for `2026_03_drop_invoice_flags`.\n  C: Ignore the guard and update the runbook screenshot.\n\nReturn strict JSON only.",
+  "stream": false,
+  "options": {
+    "temperature": 0,
+    "num_predict": 96
+  },
+  "keep_alive": "30m",
+  "think": false
+}

@@ -1,0 +1,11 @@
+{
+  "model": "qwen3.5:9b",
+  "prompt": "Recover the current coding-session state from the context below.\nUse only the provided session context and recent turns.\nChoose exactly one option ID for each field.\nReturn JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.\n\nRECENT TURNS ONLY:\nTurn 1 [User]: I found a stale reminder from an abandoned branch. It says to work in `routes/coupons.py` and to use this old direction: Accept any alphanumeric string to reduce user friction.\nTurn 2 [Tool]: Stale reminder detail that may be wrong: The old regex was `^[A-Z0-9]{4,8}$`.\nTurn 3 [Assistant]: That note looks stale. I should not trust the reminder file, rule, detail, or next step until I reconcile it with the earlier session.\nTurn 4 [User]: Exactly. Recover the real final state from the earlier context, not the stale reminder, before you continue.\nTurn 5 [Assistant]: I will ignore the stale reminder unless the earlier context confirms this old next step: Edit `routes/coupons.py` and widen the format to any alphanumeric string.\n\nGOAL OPTIONS:\n  A: Fix the coupon code validator without changing the accepted format.\n  B: Rebrand coupon codes with a brand-new format.\n  C: Build a coupon admin UI first.\n\nFILE OPTIONS:\n  A: routes/coupons.py\n  B: tests/test_coupon_code.py\n  C: validators/coupon_code.py\n\nCONSTRAINT OPTIONS:\n  A: Accept any alphanumeric string to reduce user friction.\n  B: Do not widen the accepted pattern; the existing format stays strict.\n  C: Move validation into the browser first.\n\nDETAIL OPTIONS:\n  A: The old regex was `^[A-Z0-9]{4,8}$`.\n  B: The issue is a color mismatch in the coupon modal.\n  C: The exact regex is `^[A-Z]{3}-\\d{4}$`.\n\nNEXT_STEP OPTIONS:\n  A: Edit `routes/coupons.py` and widen the format to any alphanumeric string.\n  B: Edit `validators/coupon_code.py` to preserve `^[A-Z]{3}-\\d{4}$` and rerun `pytest tests/test_coupon_code.py -q`.\n  C: Skip validation and restyle the coupon modal.\n\nReturn strict JSON only.",
+  "stream": false,
+  "options": {
+    "temperature": 0,
+    "num_predict": 96
+  },
+  "keep_alive": "30m",
+  "think": false
+}

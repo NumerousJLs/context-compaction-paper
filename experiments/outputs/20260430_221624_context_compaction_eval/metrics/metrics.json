@@ -1,0 +1,188 @@
+{
+  "condition_rows": [
+    {
+      "condition": "C0_full_transcript",
+      "n": 30,
+      "continuity_score": 1.0,
+      "avg_prompt_tokens": 701.7333333333333,
+      "avg_output_tokens": 50.0,
+      "avg_total_tokens": 751.7333333333333,
+      "avg_elapsed_seconds": 7.607582378387451,
+      "goal_accuracy": 1.0,
+      "file_accuracy": 1.0,
+      "constraint_accuracy": 1.0,
+      "detail_accuracy": 1.0,
+      "next_step_accuracy": 1.0,
+      "parse_failures": 0
+    },
+    {
+      "condition": "C1_recent_only",
+      "n": 30,
+      "continuity_score": 0.92,
+      "avg_prompt_tokens": 423.03333333333336,
+      "avg_output_tokens": 50.0,
+      "avg_total_tokens": 473.03333333333336,
+      "avg_elapsed_seconds": 5.581288131078084,
+      "goal_accuracy": 1.0,
+      "file_accuracy": 0.8,
+      "constraint_accuracy": 0.9333333333333333,
+      "detail_accuracy": 0.9333333333333333,
+      "next_step_accuracy": 0.9333333333333333,
+      "parse_failures": 0
+    },
+    {
+      "condition": "C2_bullet_summary",
+      "n": 30,
+      "continuity_score": 0.9600000000000001,
+      "avg_prompt_tokens": 528.8333333333334,
+      "avg_output_tokens": 50.0,
+      "avg_total_tokens": 578.8333333333334,
+      "avg_elapsed_seconds": 6.061658867200216,
+      "goal_accuracy": 1.0,
+      "file_accuracy": 0.8,
+      "constraint_accuracy": 1.0,
+      "detail_accuracy": 1.0,
+      "next_step_accuracy": 1.0,
+      "parse_failures": 0
+    },
+    {
+      "condition": "C3_structured_state_sheet",
+      "n": 30,
+      "continuity_score": 1.0,
+      "avg_prompt_tokens": 515.0666666666667,
+      "avg_output_tokens": 50.0,
+      "avg_total_tokens": 565.0666666666667,
+      "avg_elapsed_seconds": 6.01235895951589,
+      "goal_accuracy": 1.0,
+      "file_accuracy": 1.0,
+      "constraint_accuracy": 1.0,
+      "detail_accuracy": 1.0,
+      "next_step_accuracy": 1.0,
+      "parse_failures": 0
+    },
+    {
+      "condition": "C4_hybrid_state_sheet",
+      "n": 30,
+      "continuity_score": 1.0,
+      "avg_prompt_tokens": 556.7333333333333,
+      "avg_output_tokens": 50.0,
+      "avg_total_tokens": 606.7333333333333,
+      "avg_elapsed_seconds": 6.213392964998881,
+      "goal_accuracy": 1.0,
+      "file_accuracy": 1.0,
+      "constraint_accuracy": 1.0,
+      "detail_accuracy": 1.0,
+      "next_step_accuracy": 1.0,
+      "parse_failures": 0
+    }
+  ],
+  "family_rows": [
+    {
+      "condition": "C0_full_transcript",
+      "family": "latest_constraint",
+      "n": 10,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C1_recent_only",
+      "family": "latest_constraint",
+      "n": 10,
+      "continuity_score": 0.9199999999999999
+    },
+    {
+      "condition": "C2_bullet_summary",
+      "family": "latest_constraint",
+      "n": 10,
+      "continuity_score": 0.9800000000000001
+    },
+    {
+      "condition": "C3_structured_state_sheet",
+      "family": "latest_constraint",
+      "n": 10,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C4_hybrid_state_sheet",
+      "family": "latest_constraint",
+      "n": 10,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C0_full_transcript",
+      "family": "brittle_detail",
+      "n": 10,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C1_recent_only",
+      "family": "brittle_detail",
+      "n": 10,
+      "continuity_score": 0.9
+    },
+    {
+      "condition": "C2_bullet_summary",
+      "family": "brittle_detail",
+      "n": 10,
+      "continuity_score": 0.9400000000000001
+    },
+    {
+      "condition": "C3_structured_state_sheet",
+      "family": "brittle_detail",
+      "n": 10,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C4_hybrid_state_sheet",
+      "family": "brittle_detail",
+      "n": 10,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C0_full_transcript",
+      "family": "next_step_continuity",
+      "n": 10,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C1_recent_only",
+      "family": "next_step_continuity",
+      "n": 10,
+      "continuity_score": 0.9400000000000001
+    },
+    {
+      "condition": "C2_bullet_summary",
+      "family": "next_step_continuity",
+      "n": 10,
+      "continuity_score": 0.96
+    },
+    {
+      "condition": "C3_structured_state_sheet",
+      "family": "next_step_continuity",
+      "n": 10,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C4_hybrid_state_sheet",
+      "family": "next_step_continuity",
+      "n": 10,
+      "continuity_score": 1.0
+    }
+  ],
+  "error_rows": [
+    {
+      "condition": "C1_recent_only",
+      "error_type": "blended_old_and_new_state",
+      "count": 2
+    },
+    {
+      "condition": "C1_recent_only",
+      "error_type": "wrong_file",
+      "count": 4
+    },
+    {
+      "condition": "C2_bullet_summary",
+      "error_type": "wrong_file",
+      "count": 6
+    }
+  ]
+}

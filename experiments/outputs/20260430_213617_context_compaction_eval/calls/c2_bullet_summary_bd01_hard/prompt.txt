@@ -1,0 +1,44 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+COMPACTED MEMORY:
+- Goal: Recover the local compose startup flow for the API and worker stack.
+- Progress: The images build successfully and env files load.
+- Current focus is in the dev compose configuration, and the latest rule is the keep-service-names rule.
+- The open issue is The dev startup instructions still point at the wrong command.
+- Next: finish the pending fix and preserve the compose command that starts only api and worker.
+
+RECENT TURNS:
+Turn 1 [User]: We compacted the earlier session because the chat was getting long.
+Turn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.
+Turn 3 [User]: Please recover the current state exactly before taking the next step.
+Turn 4 [Assistant]: I should double-check that I keep only the final corrected branch before I continue.
+
+GOAL OPTIONS:
+  A: Replace Docker Compose with Kubernetes manifests.
+  B: Design a new local setup walkthrough page.
+  C: Recover the local compose startup flow for the API and worker stack.
+
+FILE OPTIONS:
+  A: docker/docker-compose.dev.yml
+  B: docker/Dockerfile.api
+  C: scripts/dev_up.sh
+
+CONSTRAINT OPTIONS:
+  A: Rename the API and worker services to make the stack clearer.
+  B: Keep the existing service names; do not rename containers while debugging.
+  C: Move the whole stack to Nomad before debugging.
+
+DETAIL OPTIONS:
+  A: The exact startup command is `docker compose -f docker/docker-compose.dev.yml up api worker`.
+  B: The old command was `docker compose up db cache`.
+  C: The issue is just a broken screenshot in the docs.
+
+NEXT_STEP OPTIONS:
+  A: Rename the services and only start db plus cache.
+  B: Skip the compose file and edit the docs screenshot.
+  C: Use `docker compose -f docker/docker-compose.dev.yml up api worker` and keep the service names unchanged while fixing `docker/docker-compose.dev.yml`.
+
+Return strict JSON only.

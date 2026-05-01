@@ -1,0 +1,7 @@
+{
+  "goal_id": "B",
+  "file_id": "C",
+  "constraint_id": "A",
+  "detail_id": "C",
+  "next_step_id": "B"
+}

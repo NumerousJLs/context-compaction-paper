@@ -1,0 +1,44 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+COMPACTED MEMORY:
+Goal: Fix the Prometheus metrics exporter so queue metrics appear again.
+Status: The registry wiring and scrape endpoint already work.
+File: observability/queue_metrics.py
+Constraint: Keep the metric names stable; do not rename `queue_depth_total`.
+Open issue: The queue metric code still points at the wrong name.
+Next step: continue the pending fix in the target file, then rerun the relevant verification.
+
+RECENT TURNS:
+Turn 1 [User]: We compacted the earlier session because the chat was getting long.
+Turn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.
+Turn 3 [User]: Please recover the current state exactly before taking the next step.
+
+GOAL OPTIONS:
+  A: Rewrite the observability stack around OpenTelemetry collectors.
+  B: Fix the Prometheus metrics exporter so queue metrics appear again.
+  C: Add a new dashboard theme for Grafana.
+
+FILE OPTIONS:
+  A: observability/queue_metrics.py
+  B: observability/exporter.py
+  C: tests/test_queue_metrics.py
+
+CONSTRAINT OPTIONS:
+  A: Rename everything to `job_queue_depth_total` while fixing the bug.
+  B: Drop Prometheus and emit logs only.
+  C: Keep the metric names stable; do not rename `queue_depth_total`.
+
+DETAIL OPTIONS:
+  A: The missing metric is exactly `queue_depth_total`.
+  B: The only missing metric is `request_latency_ms`.
+  C: The actual issue is a Grafana panel color mismatch.
+
+NEXT_STEP OPTIONS:
+  A: Edit `observability/exporter.py` and rename the metric family.
+  B: Ignore the exporter and retheme the dashboard.
+  C: Edit `observability/queue_metrics.py` to restore `queue_depth_total` without renaming it, then rerun `pytest tests/test_queue_metrics.py -q`.
+
+Return strict JSON only.

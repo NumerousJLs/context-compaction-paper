@@ -1,0 +1,11 @@
+{
+  "model": "qwen3.5:9b",
+  "prompt": "Recover the current coding-session state from the context below.\nUse only the provided session context and recent turns.\nChoose exactly one option ID for each field.\nReturn JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.\n\nRECENT TURNS ONLY:\nTurn 1 [User]: We compacted the earlier session because the chat was getting long.\nTurn 2 [Assistant]: I can resume once I recover the active task state from the earlier context.\nTurn 3 [User]: Please recover the current state exactly before taking the next step.\n\nGOAL OPTIONS:\n  A: Move the frontend to a different bundler first.\n  B: Fix the frontend build so the API base URL is injected again.\n  C: Design a new settings page for build variables.\n\nFILE OPTIONS:\n  A: frontend/src/config.ts\n  B: frontend/.env.example\n  C: frontend/build/config.ts\n\nCONSTRAINT OPTIONS:\n  A: Keep the environment lookup at build time; do not hardcode the API URL.\n  B: Hardcode the API URL in the source config file.\n  C: Move configuration to localStorage first.\n\nDETAIL OPTIONS:\n  A: The old key was `API_BASE_URL`.\n  B: The actual bug is a misaligned button in the settings page.\n  C: The exact key is `VITE_API_BASE_URL`.\n\nNEXT_STEP OPTIONS:\n  A: Edit `frontend/src/config.ts` and hardcode `API_BASE_URL`.\n  B: Edit `frontend/build/config.ts` to preserve build-time injection of `VITE_API_BASE_URL`, then rerun `npm test -- --runInBand config`.\n  C: Ignore the build and redesign the settings page.\n\nReturn strict JSON only.",
+  "stream": false,
+  "options": {
+    "temperature": 0,
+    "num_predict": 96
+  },
+  "keep_alive": "30m",
+  "think": false
+}

@@ -1,0 +1,4496 @@
+[
+  {
+    "task_id": "lc01",
+    "family": "latest_constraint",
+    "scenario": "Flask user search endpoint",
+    "failure_mode": "late database constraint correction",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the flask user search endpoint. Finish the Flask user search endpoint so filtered queries work again."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `api/routes/users.py` and follow this rule: Keep the old SQLite LIKE query because production still mirrors local dev."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: The request parser and pagination fix are already done."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: Remember that the failing case is `GET /users/search?q=jo` returning an empty list."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The search handler is still using the outdated SQLite query path."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `api/routes/user_search.py`. Also, the latest rule is: Use Postgres ILIKE filters and do not reintroduce SQLite-specific query code."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `api/routes/user_search.py` and keep in mind that the latest correction overrides the earlier plan."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The search handler is still using the outdated SQLite query path."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Finish the Flask user search endpoint so filtered queries work again."
+        },
+        {
+          "id": "B",
+          "text": "Rewrite the React search modal for the user dashboard."
+        },
+        {
+          "id": "C",
+          "text": "Add a new Elasticsearch cluster for user search."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "api/routes/users.py"
+        },
+        {
+          "id": "B",
+          "text": "api/routes/user_search.py"
+        },
+        {
+          "id": "C",
+          "text": "tests/api/test_user_search.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Keep the old SQLite LIKE query because production still mirrors local dev."
+        },
+        {
+          "id": "B",
+          "text": "Move the search to Elasticsearch before fixing the endpoint."
+        },
+        {
+          "id": "C",
+          "text": "Use Postgres ILIKE filters and do not reintroduce SQLite-specific query code."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The old failure was a timeout on `GET /users?page=2`."
+        },
+        {
+          "id": "B",
+          "text": "Remember that the failing case is `GET /users/search?q=jo` returning an empty list."
+        },
+        {
+          "id": "C",
+          "text": "The main issue is a CSS overflow in the search drawer."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Edit `api/routes/user_search.py` to switch the query builder to Postgres ILIKE and rerun `pytest tests/api/test_user_search.py -q`."
+        },
+        {
+          "id": "B",
+          "text": "Edit `api/routes/users.py` and keep the SQLite query path in place."
+        },
+        {
+          "id": "C",
+          "text": "Skip the backend and only change the search modal placeholder text."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "A",
+      "file": "B",
+      "constraint": "C",
+      "detail": "B",
+      "next_step": "A"
+    },
+    "state": {
+      "active_goal": "Finish the Flask user search endpoint so filtered queries work again.",
+      "target_file": "api/routes/user_search.py",
+      "target_file_hint": "the user search route module",
+      "latest_constraint": "Use Postgres ILIKE filters and do not reintroduce SQLite-specific query code.",
+      "latest_constraint_hint": "the newer Postgres-only query rule",
+      "key_exact_detail": "Remember that the failing case is `GET /users/search?q=jo` returning an empty list.",
+      "key_exact_detail_hint": "the empty-result search regression on `q=jo`",
+      "next_step": "Edit `api/routes/user_search.py` to switch the query builder to Postgres ILIKE and rerun `pytest tests/api/test_user_search.py -q`.",
+      "completed_work": "The request parser and pagination fix are already done.",
+      "open_issue": "The search handler is still using the outdated SQLite query path."
+    }
+  },
+  {
+    "task_id": "lc02",
+    "family": "latest_constraint",
+    "scenario": "CSV ingestion worker",
+    "failure_mode": "late dependency restriction",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the csv ingestion worker. Restore the nightly CSV ingestion worker without changing the upstream file format."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `workers/import_runner.py` and follow this rule: Add pandas and rewrite the parser around DataFrames."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: The retry wrapper and checkpoint writes already work."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: Preserve the exact delimiter override `delimiter='|'` for partner feeds."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The parser fix still points at the wrong dependency choice."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `workers/csv_ingest.py`. Also, the latest rule is: Do not add pandas; keep the fix in the standard library parser."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `workers/csv_ingest.py` and keep in mind that the latest correction overrides the earlier plan."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The parser fix still points at the wrong dependency choice."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Migrate the ingestion pipeline to Avro first."
+        },
+        {
+          "id": "B",
+          "text": "Restore the nightly CSV ingestion worker without changing the upstream file format."
+        },
+        {
+          "id": "C",
+          "text": "Add a brand new upload UI for CSV imports."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "workers/import_runner.py"
+        },
+        {
+          "id": "B",
+          "text": "scripts/replay_csv_job.sh"
+        },
+        {
+          "id": "C",
+          "text": "workers/csv_ingest.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Do not add pandas; keep the fix in the standard library parser."
+        },
+        {
+          "id": "B",
+          "text": "Add pandas and rewrite the parser around DataFrames."
+        },
+        {
+          "id": "C",
+          "text": "Switch the job to read Parquet instead of CSV."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The only important flag is `delimiter=','` for local tests."
+        },
+        {
+          "id": "B",
+          "text": "The main problem is an S3 bucket policy change."
+        },
+        {
+          "id": "C",
+          "text": "Preserve the exact delimiter override `delimiter='|'` for partner feeds."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Rewrite the importer with pandas in `workers/import_runner.py`."
+        },
+        {
+          "id": "B",
+          "text": "Update `workers/csv_ingest.py` to keep the standard library parser, preserve `delimiter='|'`, and rerun `python scripts/replay_csv_job.sh --sample partner_feed`."
+        },
+        {
+          "id": "C",
+          "text": "Ignore the parser and work on the upload UI instead."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "B",
+      "file": "C",
+      "constraint": "A",
+      "detail": "C",
+      "next_step": "B"
+    },
+    "state": {
+      "active_goal": "Restore the nightly CSV ingestion worker without changing the upstream file format.",
+      "target_file": "workers/csv_ingest.py",
+      "target_file_hint": "the CSV ingest worker",
+      "latest_constraint": "Do not add pandas; keep the fix in the standard library parser.",
+      "latest_constraint_hint": "the no-new-dependency parsing rule",
+      "key_exact_detail": "Preserve the exact delimiter override `delimiter='|'` for partner feeds.",
+      "key_exact_detail_hint": "the pipe-delimiter override for partner feeds",
+      "next_step": "Update `workers/csv_ingest.py` to keep the standard library parser, preserve `delimiter='|'`, and rerun `python scripts/replay_csv_job.sh --sample partner_feed`.",
+      "completed_work": "The retry wrapper and checkpoint writes already work.",
+      "open_issue": "The parser fix still points at the wrong dependency choice."
+    }
+  },
+  {
+    "task_id": "lc03",
+    "family": "latest_constraint",
+    "scenario": "Webhook signature middleware",
+    "failure_mode": "late verification-method correction",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the webhook signature middleware. Fix webhook signature verification so billing callbacks stop failing in staging."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `routes/webhooks.py` and follow this rule: Keep hashing the parsed JSON string because it is easier to debug."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: Route registration and secret loading already work."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The exact header to keep is `X-Signature-Timestamp`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The signature check still uses the wrong payload representation."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `middleware/webhook_signature.py`. Also, the latest rule is: Use the raw request body bytes; do not verify against the parsed JSON string."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `middleware/webhook_signature.py` and keep in mind that the latest correction overrides the earlier plan."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The signature check still uses the wrong payload representation."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Create a new billing dashboard tab for webhook history."
+        },
+        {
+          "id": "B",
+          "text": "Rotate all production secrets and redeploy the entire stack."
+        },
+        {
+          "id": "C",
+          "text": "Fix webhook signature verification so billing callbacks stop failing in staging."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "middleware/webhook_signature.py"
+        },
+        {
+          "id": "B",
+          "text": "routes/webhooks.py"
+        },
+        {
+          "id": "C",
+          "text": "tests/test_webhook_signature.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Keep hashing the parsed JSON string because it is easier to debug."
+        },
+        {
+          "id": "B",
+          "text": "Use the raw request body bytes; do not verify against the parsed JSON string."
+        },
+        {
+          "id": "C",
+          "text": "Move verification entirely into the frontend dev proxy."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The exact header to keep is `X-Signature-Timestamp`."
+        },
+        {
+          "id": "B",
+          "text": "The only header that matters is `X-Request-Id`."
+        },
+        {
+          "id": "C",
+          "text": "The main bug is a CSS issue in the staging admin page."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Edit `routes/webhooks.py` and keep verifying the parsed JSON string."
+        },
+        {
+          "id": "B",
+          "text": "Skip verification and work on the billing dashboard tab."
+        },
+        {
+          "id": "C",
+          "text": "Edit `middleware/webhook_signature.py` to verify the raw body bytes and preserve `X-Signature-Timestamp`, then rerun `pytest tests/test_webhook_signature.py -q`."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "C",
+      "file": "A",
+      "constraint": "B",
+      "detail": "A",
+      "next_step": "C"
+    },
+    "state": {
+      "active_goal": "Fix webhook signature verification so billing callbacks stop failing in staging.",
+      "target_file": "middleware/webhook_signature.py",
+      "target_file_hint": "the webhook signature middleware",
+      "latest_constraint": "Use the raw request body bytes; do not verify against the parsed JSON string.",
+      "latest_constraint_hint": "the raw-bytes verification rule",
+      "key_exact_detail": "The exact header to keep is `X-Signature-Timestamp`.",
+      "key_exact_detail_hint": "the timestamp signature header",
+      "next_step": "Edit `middleware/webhook_signature.py` to verify the raw body bytes and preserve `X-Signature-Timestamp`, then rerun `pytest tests/test_webhook_signature.py -q`.",
+      "completed_work": "Route registration and secret loading already work.",
+      "open_issue": "The signature check still uses the wrong payload representation."
+    }
+  },
+  {
+    "task_id": "lc04",
+    "family": "latest_constraint",
+    "scenario": "Static site build script",
+    "failure_mode": "late shell-compatibility correction",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the static site build script. Repair the static site build script so preview deploys succeed again."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `scripts/deploy_preview.sh` and follow this rule: Rewrite the script with bash-only arrays and associative maps."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: Asset copying and preview folder cleanup already work."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The exact environment variable still required is `PREVIEW_BASE_URL`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The script still assumes bash-specific syntax."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `scripts/build_preview.sh`. Also, the latest rule is: Keep the build POSIX-shell compatible; do not switch to bash arrays."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `scripts/build_preview.sh` and keep in mind that the latest correction overrides the earlier plan."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The script still assumes bash-specific syntax."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Repair the static site build script so preview deploys succeed again."
+        },
+        {
+          "id": "B",
+          "text": "Replace the static site generator with Next.js."
+        },
+        {
+          "id": "C",
+          "text": "Create a new design system for the marketing site."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "scripts/deploy_preview.sh"
+        },
+        {
+          "id": "B",
+          "text": "docs/preview_build.md"
+        },
+        {
+          "id": "C",
+          "text": "scripts/build_preview.sh"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Rewrite the script with bash-only arrays and associative maps."
+        },
+        {
+          "id": "B",
+          "text": "Keep the build POSIX-shell compatible; do not switch to bash arrays."
+        },
+        {
+          "id": "C",
+          "text": "Move the preview build into a GitHub Action before fixing the script."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "Only `SITE_THEME` matters for this failure."
+        },
+        {
+          "id": "B",
+          "text": "The real issue is a missing Figma asset export."
+        },
+        {
+          "id": "C",
+          "text": "The exact environment variable still required is `PREVIEW_BASE_URL`."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Rewrite `scripts/deploy_preview.sh` with bash arrays."
+        },
+        {
+          "id": "B",
+          "text": "Update `scripts/build_preview.sh` to stay POSIX compatible, keep `PREVIEW_BASE_URL`, and rerun `sh scripts/build_preview.sh --dry-run`."
+        },
+        {
+          "id": "C",
+          "text": "Skip the script and redesign the marketing site."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "A",
+      "file": "C",
+      "constraint": "B",
+      "detail": "C",
+      "next_step": "B"
+    },
+    "state": {
+      "active_goal": "Repair the static site build script so preview deploys succeed again.",
+      "target_file": "scripts/build_preview.sh",
+      "target_file_hint": "the preview build script",
+      "latest_constraint": "Keep the build POSIX-shell compatible; do not switch to bash arrays.",
+      "latest_constraint_hint": "the POSIX shell compatibility rule",
+      "key_exact_detail": "The exact environment variable still required is `PREVIEW_BASE_URL`.",
+      "key_exact_detail_hint": "the preview base URL environment variable",
+      "next_step": "Update `scripts/build_preview.sh` to stay POSIX compatible, keep `PREVIEW_BASE_URL`, and rerun `sh scripts/build_preview.sh --dry-run`.",
+      "completed_work": "Asset copying and preview folder cleanup already work.",
+      "open_issue": "The script still assumes bash-specific syntax."
+    }
+  },
+  {
+    "task_id": "lc05",
+    "family": "latest_constraint",
+    "scenario": "Metrics exporter",
+    "failure_mode": "late metric-name preservation rule",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the metrics exporter. Fix the Prometheus metrics exporter so queue metrics appear again."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `observability/exporter.py` and follow this rule: Rename everything to `job_queue_depth_total` while fixing the bug."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: The registry wiring and scrape endpoint already work."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The missing metric is exactly `queue_depth_total`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The queue metric code still points at the wrong name."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `observability/queue_metrics.py`. Also, the latest rule is: Keep the metric names stable; do not rename `queue_depth_total`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `observability/queue_metrics.py` and keep in mind that the latest correction overrides the earlier plan."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The queue metric code still points at the wrong name."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Rewrite the observability stack around OpenTelemetry collectors."
+        },
+        {
+          "id": "B",
+          "text": "Fix the Prometheus metrics exporter so queue metrics appear again."
+        },
+        {
+          "id": "C",
+          "text": "Add a new dashboard theme for Grafana."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "observability/queue_metrics.py"
+        },
+        {
+          "id": "B",
+          "text": "observability/exporter.py"
+        },
+        {
+          "id": "C",
+          "text": "tests/test_queue_metrics.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Rename everything to `job_queue_depth_total` while fixing the bug."
+        },
+        {
+          "id": "B",
+          "text": "Drop Prometheus and emit logs only."
+        },
+        {
+          "id": "C",
+          "text": "Keep the metric names stable; do not rename `queue_depth_total`."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The missing metric is exactly `queue_depth_total`."
+        },
+        {
+          "id": "B",
+          "text": "The only missing metric is `request_latency_ms`."
+        },
+        {
+          "id": "C",
+          "text": "The actual issue is a Grafana panel color mismatch."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Edit `observability/exporter.py` and rename the metric family."
+        },
+        {
+          "id": "B",
+          "text": "Ignore the exporter and retheme the dashboard."
+        },
+        {
+          "id": "C",
+          "text": "Edit `observability/queue_metrics.py` to restore `queue_depth_total` without renaming it, then rerun `pytest tests/test_queue_metrics.py -q`."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "B",
+      "file": "A",
+      "constraint": "C",
+      "detail": "A",
+      "next_step": "C"
+    },
+    "state": {
+      "active_goal": "Fix the Prometheus metrics exporter so queue metrics appear again.",
+      "target_file": "observability/queue_metrics.py",
+      "target_file_hint": "the queue metrics module",
+      "latest_constraint": "Keep the metric names stable; do not rename `queue_depth_total`.",
+      "latest_constraint_hint": "the no-metric-rename rule",
+      "key_exact_detail": "The missing metric is exactly `queue_depth_total`.",
+      "key_exact_detail_hint": "the missing `queue_depth_total` metric",
+      "next_step": "Edit `observability/queue_metrics.py` to restore `queue_depth_total` without renaming it, then rerun `pytest tests/test_queue_metrics.py -q`.",
+      "completed_work": "The registry wiring and scrape endpoint already work.",
+      "open_issue": "The queue metric code still points at the wrong name."
+    }
+  },
+  {
+    "task_id": "lc06",
+    "family": "latest_constraint",
+    "scenario": "Authentication callback handler",
+    "failure_mode": "late ordering correction",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the authentication callback handler. Repair the OAuth callback handler so the login redirect flow finishes correctly."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `auth/session_store.py` and follow this rule: Exchange the auth code first and validate `state` later."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: Session persistence and redirect mapping already work."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The exact redirect path must remain `/auth/callback`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The callback still applies the wrong ordering for state validation."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `auth/callback_handler.py`. Also, the latest rule is: Validate the `state` parameter before exchanging the auth code."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `auth/callback_handler.py` and keep in mind that the latest correction overrides the earlier plan."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The callback still applies the wrong ordering for state validation."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Build a new login screen animation for the app."
+        },
+        {
+          "id": "B",
+          "text": "Replace OAuth with SAML before fixing the callback."
+        },
+        {
+          "id": "C",
+          "text": "Repair the OAuth callback handler so the login redirect flow finishes correctly."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "auth/session_store.py"
+        },
+        {
+          "id": "B",
+          "text": "auth/callback_handler.py"
+        },
+        {
+          "id": "C",
+          "text": "tests/test_callback_handler.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Validate the `state` parameter before exchanging the auth code."
+        },
+        {
+          "id": "B",
+          "text": "Exchange the auth code first and validate `state` later."
+        },
+        {
+          "id": "C",
+          "text": "Skip state validation in staging for easier testing."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The only path that matters is `/auth/login`."
+        },
+        {
+          "id": "B",
+          "text": "The exact redirect path must remain `/auth/callback`."
+        },
+        {
+          "id": "C",
+          "text": "The problem is a spacing issue in the login button text."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Edit `auth/callback_handler.py` to validate `state` before code exchange and keep `/auth/callback`, then rerun `pytest tests/test_callback_handler.py -q`."
+        },
+        {
+          "id": "B",
+          "text": "Edit `auth/session_store.py` and keep validating `state` later."
+        },
+        {
+          "id": "C",
+          "text": "Skip the backend and animate the login screen."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "C",
+      "file": "B",
+      "constraint": "A",
+      "detail": "B",
+      "next_step": "A"
+    },
+    "state": {
+      "active_goal": "Repair the OAuth callback handler so the login redirect flow finishes correctly.",
+      "target_file": "auth/callback_handler.py",
+      "target_file_hint": "the OAuth callback handler",
+      "latest_constraint": "Validate the `state` parameter before exchanging the auth code.",
+      "latest_constraint_hint": "the validate-state-before-exchange rule",
+      "key_exact_detail": "The exact redirect path must remain `/auth/callback`.",
+      "key_exact_detail_hint": "the `/auth/callback` redirect path",
+      "next_step": "Edit `auth/callback_handler.py` to validate `state` before code exchange and keep `/auth/callback`, then rerun `pytest tests/test_callback_handler.py -q`.",
+      "completed_work": "Session persistence and redirect mapping already work.",
+      "open_issue": "The callback still applies the wrong ordering for state validation."
+    }
+  },
+  {
+    "task_id": "lc07",
+    "family": "latest_constraint",
+    "scenario": "Email templating command",
+    "failure_mode": "late security constraint correction",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the email templating command. Stabilize the email preview command so transactional templates render correctly."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `mail/render.py` and follow this rule: Turn off Jinja autoescaping so previews match the old snapshots."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: The fixture loader and snapshot refresh script already work."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The preview command still needs `--template welcome_email`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The preview command still takes the unsafe rendering shortcut."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `cli/email_preview.py`. Also, the latest rule is: Keep Jinja autoescaping enabled; do not disable it for convenience."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `cli/email_preview.py` and keep in mind that the latest correction overrides the earlier plan."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The preview command still takes the unsafe rendering shortcut."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Stabilize the email preview command so transactional templates render correctly."
+        },
+        {
+          "id": "B",
+          "text": "Migrate the whole mail system to a third-party vendor."
+        },
+        {
+          "id": "C",
+          "text": "Create a new visual email builder."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "mail/render.py"
+        },
+        {
+          "id": "B",
+          "text": "cli/email_preview.py"
+        },
+        {
+          "id": "C",
+          "text": "tests/test_email_preview.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Turn off Jinja autoescaping so previews match the old snapshots."
+        },
+        {
+          "id": "B",
+          "text": "Replace Jinja with MJML before fixing the command."
+        },
+        {
+          "id": "C",
+          "text": "Keep Jinja autoescaping enabled; do not disable it for convenience."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The only important flag is `--template password_reset`."
+        },
+        {
+          "id": "B",
+          "text": "The preview command still needs `--template welcome_email`."
+        },
+        {
+          "id": "C",
+          "text": "The main issue is a font mismatch in the preview browser."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Update `cli/email_preview.py` to keep autoescaping enabled and preserve `--template welcome_email`, then rerun `pytest tests/test_email_preview.py -q`."
+        },
+        {
+          "id": "B",
+          "text": "Edit `mail/render.py` and disable autoescaping."
+        },
+        {
+          "id": "C",
+          "text": "Ignore the CLI and build a visual email editor."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "A",
+      "file": "B",
+      "constraint": "C",
+      "detail": "B",
+      "next_step": "A"
+    },
+    "state": {
+      "active_goal": "Stabilize the email preview command so transactional templates render correctly.",
+      "target_file": "cli/email_preview.py",
+      "target_file_hint": "the email preview CLI",
+      "latest_constraint": "Keep Jinja autoescaping enabled; do not disable it for convenience.",
+      "latest_constraint_hint": "the autoescaping must stay on rule",
+      "key_exact_detail": "The preview command still needs `--template welcome_email`.",
+      "key_exact_detail_hint": "the `--template welcome_email` preview flag",
+      "next_step": "Update `cli/email_preview.py` to keep autoescaping enabled and preserve `--template welcome_email`, then rerun `pytest tests/test_email_preview.py -q`.",
+      "completed_work": "The fixture loader and snapshot refresh script already work.",
+      "open_issue": "The preview command still takes the unsafe rendering shortcut."
+    }
+  },
+  {
+    "task_id": "lc08",
+    "family": "latest_constraint",
+    "scenario": "Task scheduler timezone fix",
+    "failure_mode": "late timezone-source correction",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the task scheduler timezone fix. Fix the task scheduler so reminders fire in the correct local timezone."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `scheduler/job_runner.py` and follow this rule: Use the server timezone because it matches staging."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: The reminder selection query already works."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The exact timezone field is `user.timezone_name`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The scheduler still picks the wrong timezone source."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `scheduler/reminder_jobs.py`. Also, the latest rule is: Use the user's stored IANA timezone; do not fall back to the server timezone."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `scheduler/reminder_jobs.py` and keep in mind that the latest correction overrides the earlier plan."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The scheduler still picks the wrong timezone source."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Add a new calendar UI for reminder templates."
+        },
+        {
+          "id": "B",
+          "text": "Fix the task scheduler so reminders fire in the correct local timezone."
+        },
+        {
+          "id": "C",
+          "text": "Replace the scheduler with a managed third-party service."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "scheduler/job_runner.py"
+        },
+        {
+          "id": "B",
+          "text": "tests/test_reminder_jobs.py"
+        },
+        {
+          "id": "C",
+          "text": "scheduler/reminder_jobs.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Use the user's stored IANA timezone; do not fall back to the server timezone."
+        },
+        {
+          "id": "B",
+          "text": "Use the server timezone because it matches staging."
+        },
+        {
+          "id": "C",
+          "text": "Convert every reminder to UTC text before scheduling it."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The only important field is `user.locale`."
+        },
+        {
+          "id": "B",
+          "text": "The root problem is a CSS issue in the reminders settings page."
+        },
+        {
+          "id": "C",
+          "text": "The exact timezone field is `user.timezone_name`."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Edit `scheduler/job_runner.py` and keep using the server timezone."
+        },
+        {
+          "id": "B",
+          "text": "Edit `scheduler/reminder_jobs.py` to read `user.timezone_name` and stop using the server timezone, then rerun `pytest tests/test_reminder_jobs.py -q`."
+        },
+        {
+          "id": "C",
+          "text": "Ignore scheduling and build a new calendar UI."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "B",
+      "file": "C",
+      "constraint": "A",
+      "detail": "C",
+      "next_step": "B"
+    },
+    "state": {
+      "active_goal": "Fix the task scheduler so reminders fire in the correct local timezone.",
+      "target_file": "scheduler/reminder_jobs.py",
+      "target_file_hint": "the reminder job scheduler",
+      "latest_constraint": "Use the user's stored IANA timezone; do not fall back to the server timezone.",
+      "latest_constraint_hint": "the use-stored-IANA-timezone rule",
+      "key_exact_detail": "The exact timezone field is `user.timezone_name`.",
+      "key_exact_detail_hint": "the `user.timezone_name` field",
+      "next_step": "Edit `scheduler/reminder_jobs.py` to read `user.timezone_name` and stop using the server timezone, then rerun `pytest tests/test_reminder_jobs.py -q`.",
+      "completed_work": "The reminder selection query already works.",
+      "open_issue": "The scheduler still picks the wrong timezone source."
+    }
+  },
+  {
+    "task_id": "bd01",
+    "family": "brittle_detail",
+    "scenario": "Docker compose startup command",
+    "failure_mode": "lost exact startup command",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the docker compose startup command. Recover the local compose startup flow for the API and worker stack."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `docker/Dockerfile.api` and follow this rule: Rename the API and worker services to make the stack clearer."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: The images build successfully and env files load."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The exact startup command is `docker compose -f docker/docker-compose.dev.yml up api worker`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The dev startup instructions still point at the wrong command."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `docker/docker-compose.dev.yml`. Also, the latest rule is: Keep the existing service names; do not rename containers while debugging."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `docker/docker-compose.dev.yml` and keep in mind that the exact brittle detail matters more than the earlier rough description."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The dev startup instructions still point at the wrong command."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Replace Docker Compose with Kubernetes manifests."
+        },
+        {
+          "id": "B",
+          "text": "Design a new local setup walkthrough page."
+        },
+        {
+          "id": "C",
+          "text": "Recover the local compose startup flow for the API and worker stack."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "docker/docker-compose.dev.yml"
+        },
+        {
+          "id": "B",
+          "text": "docker/Dockerfile.api"
+        },
+        {
+          "id": "C",
+          "text": "scripts/dev_up.sh"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Rename the API and worker services to make the stack clearer."
+        },
+        {
+          "id": "B",
+          "text": "Keep the existing service names; do not rename containers while debugging."
+        },
+        {
+          "id": "C",
+          "text": "Move the whole stack to Nomad before debugging."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The exact startup command is `docker compose -f docker/docker-compose.dev.yml up api worker`."
+        },
+        {
+          "id": "B",
+          "text": "The old command was `docker compose up db cache`."
+        },
+        {
+          "id": "C",
+          "text": "The issue is just a broken screenshot in the docs."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Rename the services and only start db plus cache."
+        },
+        {
+          "id": "B",
+          "text": "Skip the compose file and edit the docs screenshot."
+        },
+        {
+          "id": "C",
+          "text": "Use `docker compose -f docker/docker-compose.dev.yml up api worker` and keep the service names unchanged while fixing `docker/docker-compose.dev.yml`."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "C",
+      "file": "A",
+      "constraint": "B",
+      "detail": "A",
+      "next_step": "C"
+    },
+    "state": {
+      "active_goal": "Recover the local compose startup flow for the API and worker stack.",
+      "target_file": "docker/docker-compose.dev.yml",
+      "target_file_hint": "the dev compose configuration",
+      "latest_constraint": "Keep the existing service names; do not rename containers while debugging.",
+      "latest_constraint_hint": "the keep-service-names rule",
+      "key_exact_detail": "The exact startup command is `docker compose -f docker/docker-compose.dev.yml up api worker`.",
+      "key_exact_detail_hint": "the compose command that starts only api and worker",
+      "next_step": "Use `docker compose -f docker/docker-compose.dev.yml up api worker` and keep the service names unchanged while fixing `docker/docker-compose.dev.yml`.",
+      "completed_work": "The images build successfully and env files load.",
+      "open_issue": "The dev startup instructions still point at the wrong command."
+    }
+  },
+  {
+    "task_id": "bd02",
+    "family": "brittle_detail",
+    "scenario": "Regex validator",
+    "failure_mode": "lost exact regex detail",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the regex validator. Fix the coupon code validator without changing the accepted format."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `routes/coupons.py` and follow this rule: Accept any alphanumeric string to reduce user friction."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: The parser and normalization step already work."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The exact regex is `^[A-Z]{3}-\\d{4}$`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The exact regex was dropped during refactoring."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `validators/coupon_code.py`. Also, the latest rule is: Do not widen the accepted pattern; the existing format stays strict."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `validators/coupon_code.py` and keep in mind that the exact brittle detail matters more than the earlier rough description."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The exact regex was dropped during refactoring."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Fix the coupon code validator without changing the accepted format."
+        },
+        {
+          "id": "B",
+          "text": "Rebrand coupon codes with a brand-new format."
+        },
+        {
+          "id": "C",
+          "text": "Build a coupon admin UI first."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "routes/coupons.py"
+        },
+        {
+          "id": "B",
+          "text": "tests/test_coupon_code.py"
+        },
+        {
+          "id": "C",
+          "text": "validators/coupon_code.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Accept any alphanumeric string to reduce user friction."
+        },
+        {
+          "id": "B",
+          "text": "Do not widen the accepted pattern; the existing format stays strict."
+        },
+        {
+          "id": "C",
+          "text": "Move validation into the browser first."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The old regex was `^[A-Z0-9]{4,8}$`."
+        },
+        {
+          "id": "B",
+          "text": "The issue is a color mismatch in the coupon modal."
+        },
+        {
+          "id": "C",
+          "text": "The exact regex is `^[A-Z]{3}-\\d{4}$`."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Edit `routes/coupons.py` and widen the format to any alphanumeric string."
+        },
+        {
+          "id": "B",
+          "text": "Edit `validators/coupon_code.py` to preserve `^[A-Z]{3}-\\d{4}$` and rerun `pytest tests/test_coupon_code.py -q`."
+        },
+        {
+          "id": "C",
+          "text": "Skip validation and restyle the coupon modal."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "A",
+      "file": "C",
+      "constraint": "B",
+      "detail": "C",
+      "next_step": "B"
+    },
+    "state": {
+      "active_goal": "Fix the coupon code validator without changing the accepted format.",
+      "target_file": "validators/coupon_code.py",
+      "target_file_hint": "the coupon validator module",
+      "latest_constraint": "Do not widen the accepted pattern; the existing format stays strict.",
+      "latest_constraint_hint": "the keep-the-format-strict rule",
+      "key_exact_detail": "The exact regex is `^[A-Z]{3}-\\d{4}$`.",
+      "key_exact_detail_hint": "the three-letters dash four-digits regex",
+      "next_step": "Edit `validators/coupon_code.py` to preserve `^[A-Z]{3}-\\d{4}$` and rerun `pytest tests/test_coupon_code.py -q`.",
+      "completed_work": "The parser and normalization step already work.",
+      "open_issue": "The exact regex was dropped during refactoring."
+    }
+  },
+  {
+    "task_id": "bd03",
+    "family": "brittle_detail",
+    "scenario": "Env loader bug",
+    "failure_mode": "lost exact env var",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the env loader bug. Repair the environment loader so staging secrets resolve again."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `config/settings.py` and follow this rule: Rename the env vars to a cleaner prefix while fixing the bug."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: The `.env` file is found and fallback loading works."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The exact variable is `PAYMENTS_SIGNING_SECRET`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The loader still points at the wrong secret name."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `config/env_loader.py`. Also, the latest rule is: Keep the existing secret name mapping; do not rename the env vars."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `config/env_loader.py` and keep in mind that the exact brittle detail matters more than the earlier rough description."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The loader still points at the wrong secret name."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Move secrets management to a new vendor before fixing the loader."
+        },
+        {
+          "id": "B",
+          "text": "Repair the environment loader so staging secrets resolve again."
+        },
+        {
+          "id": "C",
+          "text": "Create a security dashboard for missing env vars."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "config/env_loader.py"
+        },
+        {
+          "id": "B",
+          "text": "config/settings.py"
+        },
+        {
+          "id": "C",
+          "text": "tests/test_env_loader.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Rename the env vars to a cleaner prefix while fixing the bug."
+        },
+        {
+          "id": "B",
+          "text": "Hardcode the secret locally to unblock staging."
+        },
+        {
+          "id": "C",
+          "text": "Keep the existing secret name mapping; do not rename the env vars."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The exact variable is `PAYMENTS_SIGNING_SECRET`."
+        },
+        {
+          "id": "B",
+          "text": "The old variable was `PAYMENT_SECRET`."
+        },
+        {
+          "id": "C",
+          "text": "The main issue is a spacing bug in the settings panel."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Edit `config/settings.py` and rename the variable to `PAYMENT_SECRET`."
+        },
+        {
+          "id": "B",
+          "text": "Ignore the loader and build a dashboard for missing env vars."
+        },
+        {
+          "id": "C",
+          "text": "Edit `config/env_loader.py` to preserve `PAYMENTS_SIGNING_SECRET` and rerun `pytest tests/test_env_loader.py -q`."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "B",
+      "file": "A",
+      "constraint": "C",
+      "detail": "A",
+      "next_step": "C"
+    },
+    "state": {
+      "active_goal": "Repair the environment loader so staging secrets resolve again.",
+      "target_file": "config/env_loader.py",
+      "target_file_hint": "the environment loader",
+      "latest_constraint": "Keep the existing secret name mapping; do not rename the env vars.",
+      "latest_constraint_hint": "the preserve-existing-env-names rule",
+      "key_exact_detail": "The exact variable is `PAYMENTS_SIGNING_SECRET`.",
+      "key_exact_detail_hint": "the payments signing secret variable",
+      "next_step": "Edit `config/env_loader.py` to preserve `PAYMENTS_SIGNING_SECRET` and rerun `pytest tests/test_env_loader.py -q`.",
+      "completed_work": "The `.env` file is found and fallback loading works.",
+      "open_issue": "The loader still points at the wrong secret name."
+    }
+  },
+  {
+    "task_id": "bd04",
+    "family": "brittle_detail",
+    "scenario": "SQL migration guard",
+    "failure_mode": "lost exact migration id",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the sql migration guard. Fix the migration guard so the billing schema patch can run safely."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `db/migrations/runner.py` and follow this rule: Delete old rows to make the schema patch simpler."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: The schema diff and dry-run path already work."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The exact migration identifier is `2026_04_add_billing_status_index`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The guard lost the exact migration identifier during the refactor."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `db/migrations/guard.py`. Also, the latest rule is: Do not drop existing rows; keep the migration additive."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `db/migrations/guard.py` and keep in mind that the exact brittle detail matters more than the earlier rough description."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The guard lost the exact migration identifier during the refactor."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Rewrite the whole billing schema from scratch."
+        },
+        {
+          "id": "B",
+          "text": "Make a visual migration status page first."
+        },
+        {
+          "id": "C",
+          "text": "Fix the migration guard so the billing schema patch can run safely."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "db/migrations/runner.py"
+        },
+        {
+          "id": "B",
+          "text": "db/migrations/guard.py"
+        },
+        {
+          "id": "C",
+          "text": "tests/test_migration_guard.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Do not drop existing rows; keep the migration additive."
+        },
+        {
+          "id": "B",
+          "text": "Delete old rows to make the schema patch simpler."
+        },
+        {
+          "id": "C",
+          "text": "Skip the guard and patch the database manually."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The old migration id was `2026_03_drop_invoice_flags`."
+        },
+        {
+          "id": "B",
+          "text": "The exact migration identifier is `2026_04_add_billing_status_index`."
+        },
+        {
+          "id": "C",
+          "text": "The issue is just a stale screenshot in the runbook."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Edit `db/migrations/guard.py` to preserve the additive guard for `2026_04_add_billing_status_index`, then rerun `pytest tests/test_migration_guard.py -q`."
+        },
+        {
+          "id": "B",
+          "text": "Edit `db/migrations/runner.py` and delete old rows for `2026_03_drop_invoice_flags`."
+        },
+        {
+          "id": "C",
+          "text": "Ignore the guard and update the runbook screenshot."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "C",
+      "file": "B",
+      "constraint": "A",
+      "detail": "B",
+      "next_step": "A"
+    },
+    "state": {
+      "active_goal": "Fix the migration guard so the billing schema patch can run safely.",
+      "target_file": "db/migrations/guard.py",
+      "target_file_hint": "the migration guard",
+      "latest_constraint": "Do not drop existing rows; keep the migration additive.",
+      "latest_constraint_hint": "the additive-only migration rule",
+      "key_exact_detail": "The exact migration identifier is `2026_04_add_billing_status_index`.",
+      "key_exact_detail_hint": "the billing status index migration id",
+      "next_step": "Edit `db/migrations/guard.py` to preserve the additive guard for `2026_04_add_billing_status_index`, then rerun `pytest tests/test_migration_guard.py -q`.",
+      "completed_work": "The schema diff and dry-run path already work.",
+      "open_issue": "The guard lost the exact migration identifier during the refactor."
+    }
+  },
+  {
+    "task_id": "bd05",
+    "family": "brittle_detail",
+    "scenario": "Search CLI flag regression",
+    "failure_mode": "lost exact CLI flag",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the search cli flag regression. Restore the search reindex CLI so targeted reindexing works again."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `search/indexer.py` and follow this rule: Always force a full reindex to avoid edge cases."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: The job queue submission and index existence check already work."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The exact flag is `--index users_v2`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The CLI dropped the exact target index flag."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `cli/reindex_search.py`. Also, the latest rule is: Keep incremental reindexing; do not force full reindex on every run."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `cli/reindex_search.py` and keep in mind that the exact brittle detail matters more than the earlier rough description."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The CLI dropped the exact target index flag."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Restore the search reindex CLI so targeted reindexing works again."
+        },
+        {
+          "id": "B",
+          "text": "Rebuild search as a hosted service first."
+        },
+        {
+          "id": "C",
+          "text": "Add a UI for reindex history."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "search/indexer.py"
+        },
+        {
+          "id": "B",
+          "text": "cli/reindex_search.py"
+        },
+        {
+          "id": "C",
+          "text": "tests/test_reindex_search.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Always force a full reindex to avoid edge cases."
+        },
+        {
+          "id": "B",
+          "text": "Move reindexing into the frontend admin panel."
+        },
+        {
+          "id": "C",
+          "text": "Keep incremental reindexing; do not force full reindex on every run."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The old flag was `--index users_legacy`."
+        },
+        {
+          "id": "B",
+          "text": "The exact flag is `--index users_v2`."
+        },
+        {
+          "id": "C",
+          "text": "The issue is a font mismatch in the search admin page."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Edit `cli/reindex_search.py` to preserve incremental mode and keep `--index users_v2`, then rerun `pytest tests/test_reindex_search.py -q`."
+        },
+        {
+          "id": "B",
+          "text": "Edit `search/indexer.py` and force full reindex on `users_legacy`."
+        },
+        {
+          "id": "C",
+          "text": "Ignore the CLI and build a reindex history UI."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "A",
+      "file": "B",
+      "constraint": "C",
+      "detail": "B",
+      "next_step": "A"
+    },
+    "state": {
+      "active_goal": "Restore the search reindex CLI so targeted reindexing works again.",
+      "target_file": "cli/reindex_search.py",
+      "target_file_hint": "the reindex CLI",
+      "latest_constraint": "Keep incremental reindexing; do not force full reindex on every run.",
+      "latest_constraint_hint": "the keep-incremental-reindex rule",
+      "key_exact_detail": "The exact flag is `--index users_v2`.",
+      "key_exact_detail_hint": "the users_v2 index flag",
+      "next_step": "Edit `cli/reindex_search.py` to preserve incremental mode and keep `--index users_v2`, then rerun `pytest tests/test_reindex_search.py -q`.",
+      "completed_work": "The job queue submission and index existence check already work.",
+      "open_issue": "The CLI dropped the exact target index flag."
+    }
+  },
+  {
+    "task_id": "bd06",
+    "family": "brittle_detail",
+    "scenario": "Frontend build env injection",
+    "failure_mode": "lost exact frontend env key",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the frontend build env injection. Fix the frontend build so the API base URL is injected again."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `frontend/src/config.ts` and follow this rule: Hardcode the API URL in the source config file."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: The fallback config object already works."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The exact key is `VITE_API_BASE_URL`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The build step lost the exact environment key."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `frontend/build/config.ts`. Also, the latest rule is: Keep the environment lookup at build time; do not hardcode the API URL."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `frontend/build/config.ts` and keep in mind that the exact brittle detail matters more than the earlier rough description."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The build step lost the exact environment key."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Move the frontend to a different bundler first."
+        },
+        {
+          "id": "B",
+          "text": "Fix the frontend build so the API base URL is injected again."
+        },
+        {
+          "id": "C",
+          "text": "Design a new settings page for build variables."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "frontend/src/config.ts"
+        },
+        {
+          "id": "B",
+          "text": "frontend/.env.example"
+        },
+        {
+          "id": "C",
+          "text": "frontend/build/config.ts"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Keep the environment lookup at build time; do not hardcode the API URL."
+        },
+        {
+          "id": "B",
+          "text": "Hardcode the API URL in the source config file."
+        },
+        {
+          "id": "C",
+          "text": "Move configuration to localStorage first."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The old key was `API_BASE_URL`."
+        },
+        {
+          "id": "B",
+          "text": "The actual bug is a misaligned button in the settings page."
+        },
+        {
+          "id": "C",
+          "text": "The exact key is `VITE_API_BASE_URL`."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Edit `frontend/src/config.ts` and hardcode `API_BASE_URL`."
+        },
+        {
+          "id": "B",
+          "text": "Edit `frontend/build/config.ts` to preserve build-time injection of `VITE_API_BASE_URL`, then rerun `npm test -- --runInBand config`."
+        },
+        {
+          "id": "C",
+          "text": "Ignore the build and redesign the settings page."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "B",
+      "file": "C",
+      "constraint": "A",
+      "detail": "C",
+      "next_step": "B"
+    },
+    "state": {
+      "active_goal": "Fix the frontend build so the API base URL is injected again.",
+      "target_file": "frontend/build/config.ts",
+      "target_file_hint": "the frontend build config",
+      "latest_constraint": "Keep the environment lookup at build time; do not hardcode the API URL.",
+      "latest_constraint_hint": "the build-time env lookup rule",
+      "key_exact_detail": "The exact key is `VITE_API_BASE_URL`.",
+      "key_exact_detail_hint": "the Vite API base URL key",
+      "next_step": "Edit `frontend/build/config.ts` to preserve build-time injection of `VITE_API_BASE_URL`, then rerun `npm test -- --runInBand config`.",
+      "completed_work": "The fallback config object already works.",
+      "open_issue": "The build step lost the exact environment key."
+    }
+  },
+  {
+    "task_id": "bd07",
+    "family": "brittle_detail",
+    "scenario": "Cache invalidation helper",
+    "failure_mode": "lost exact cache key pattern",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the cache invalidation helper. Repair the cache invalidation helper so profile updates clear the right key."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `cache/client.py` and follow this rule: Rename the cache namespace while fixing invalidation."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: The Redis client and mutation hook already fire correctly."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The exact key format is `profile:{user_id}:summary`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The helper now invalidates the wrong exact key."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `cache/invalidate_profile.py`. Also, the latest rule is: Keep the current key prefix; do not rename the cache namespace."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `cache/invalidate_profile.py` and keep in mind that the exact brittle detail matters more than the earlier rough description."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The helper now invalidates the wrong exact key."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Replace the cache layer with a completely new backend."
+        },
+        {
+          "id": "B",
+          "text": "Add a new admin page for cache stats."
+        },
+        {
+          "id": "C",
+          "text": "Repair the cache invalidation helper so profile updates clear the right key."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "cache/invalidate_profile.py"
+        },
+        {
+          "id": "B",
+          "text": "cache/client.py"
+        },
+        {
+          "id": "C",
+          "text": "tests/test_invalidate_profile.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Rename the cache namespace while fixing invalidation."
+        },
+        {
+          "id": "B",
+          "text": "Keep the current key prefix; do not rename the cache namespace."
+        },
+        {
+          "id": "C",
+          "text": "Skip invalidation and shorten the TTL instead."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The exact key format is `profile:{user_id}:summary`."
+        },
+        {
+          "id": "B",
+          "text": "The old key format was `profiles:{user_id}`."
+        },
+        {
+          "id": "C",
+          "text": "The issue is a CSS problem in the admin cache page."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Edit `cache/client.py` and rename the namespace to `profiles:{user_id}`."
+        },
+        {
+          "id": "B",
+          "text": "Ignore invalidation and build a cache stats page."
+        },
+        {
+          "id": "C",
+          "text": "Edit `cache/invalidate_profile.py` to keep the `profile:{user_id}:summary` key format and rerun `pytest tests/test_invalidate_profile.py -q`."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "C",
+      "file": "A",
+      "constraint": "B",
+      "detail": "A",
+      "next_step": "C"
+    },
+    "state": {
+      "active_goal": "Repair the cache invalidation helper so profile updates clear the right key.",
+      "target_file": "cache/invalidate_profile.py",
+      "target_file_hint": "the profile cache invalidation helper",
+      "latest_constraint": "Keep the current key prefix; do not rename the cache namespace.",
+      "latest_constraint_hint": "the keep-cache-prefix rule",
+      "key_exact_detail": "The exact key format is `profile:{user_id}:summary`.",
+      "key_exact_detail_hint": "the profile summary cache key format",
+      "next_step": "Edit `cache/invalidate_profile.py` to keep the `profile:{user_id}:summary` key format and rerun `pytest tests/test_invalidate_profile.py -q`.",
+      "completed_work": "The Redis client and mutation hook already fire correctly.",
+      "open_issue": "The helper now invalidates the wrong exact key."
+    }
+  },
+  {
+    "task_id": "bd08",
+    "family": "brittle_detail",
+    "scenario": "Test selection helper",
+    "failure_mode": "lost exact test marker",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the test selection helper. Restore the targeted test helper so smoke suites run quickly again."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `tools/run_tests.py` and follow this rule: Randomize smoke tests to spread coverage around."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: The helper already reads changed-file input correctly."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The exact marker is `-m smoke and not slow`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The exact marker expression was simplified too far."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `tools/select_smoke_tests.py`. Also, the latest rule is: Keep the helper deterministic; do not randomize test order."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `tools/select_smoke_tests.py` and keep in mind that the exact brittle detail matters more than the earlier rough description."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The exact marker expression was simplified too far."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Restore the targeted test helper so smoke suites run quickly again."
+        },
+        {
+          "id": "B",
+          "text": "Replace pytest with a new test framework first."
+        },
+        {
+          "id": "C",
+          "text": "Build a dashboard for flaky tests."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "tools/run_tests.py"
+        },
+        {
+          "id": "B",
+          "text": "tests/test_select_smoke_tests.py"
+        },
+        {
+          "id": "C",
+          "text": "tools/select_smoke_tests.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Randomize smoke tests to spread coverage around."
+        },
+        {
+          "id": "B",
+          "text": "Keep the helper deterministic; do not randomize test order."
+        },
+        {
+          "id": "C",
+          "text": "Run the full suite every time for consistency."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The old marker was `-m smoke`."
+        },
+        {
+          "id": "B",
+          "text": "The issue is a typo in the testing dashboard title."
+        },
+        {
+          "id": "C",
+          "text": "The exact marker is `-m smoke and not slow`."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Edit `tools/run_tests.py` and randomize plain `-m smoke` runs."
+        },
+        {
+          "id": "B",
+          "text": "Edit `tools/select_smoke_tests.py` to preserve `-m smoke and not slow` and rerun `pytest tests/test_select_smoke_tests.py -q`."
+        },
+        {
+          "id": "C",
+          "text": "Ignore the helper and build a flaky-test dashboard."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "A",
+      "file": "C",
+      "constraint": "B",
+      "detail": "C",
+      "next_step": "B"
+    },
+    "state": {
+      "active_goal": "Restore the targeted test helper so smoke suites run quickly again.",
+      "target_file": "tools/select_smoke_tests.py",
+      "target_file_hint": "the smoke-test selection helper",
+      "latest_constraint": "Keep the helper deterministic; do not randomize test order.",
+      "latest_constraint_hint": "the deterministic-order rule",
+      "key_exact_detail": "The exact marker is `-m smoke and not slow`.",
+      "key_exact_detail_hint": "the smoke-not-slow marker expression",
+      "next_step": "Edit `tools/select_smoke_tests.py` to preserve `-m smoke and not slow` and rerun `pytest tests/test_select_smoke_tests.py -q`.",
+      "completed_work": "The helper already reads changed-file input correctly.",
+      "open_issue": "The exact marker expression was simplified too far."
+    }
+  },
+  {
+    "task_id": "ns01",
+    "family": "next_step_continuity",
+    "scenario": "Billing webhook rollout",
+    "failure_mode": "repeating completed schema work",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the billing webhook rollout. Finish the billing webhook rollout without repeating already completed setup work."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `billing/webhook_schema.py` and follow this rule: Revisit the schema migration before touching runtime logic."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: Schema migration, secret loading, and endpoint registration are already complete."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The remaining failing test is `tests/test_webhook_consumer.py::test_retries_409`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: Only the 409 retry behavior is still failing."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `billing/webhook_consumer.py`. Also, the latest rule is: Do not touch the already-migrated schema file."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `billing/webhook_consumer.py` and keep in mind that some earlier setup work is already finished, so the next action should not repeat it."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: Only the 409 retry behavior is still failing."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Build a billing analytics dashboard first."
+        },
+        {
+          "id": "B",
+          "text": "Finish the billing webhook rollout without repeating already completed setup work."
+        },
+        {
+          "id": "C",
+          "text": "Replace billing webhooks with a polling job."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "billing/webhook_consumer.py"
+        },
+        {
+          "id": "B",
+          "text": "billing/webhook_schema.py"
+        },
+        {
+          "id": "C",
+          "text": "tests/test_webhook_consumer.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Revisit the schema migration before touching runtime logic."
+        },
+        {
+          "id": "B",
+          "text": "Pause rollout and redesign webhook payloads."
+        },
+        {
+          "id": "C",
+          "text": "Do not touch the already-migrated schema file."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The remaining failing test is `tests/test_webhook_consumer.py::test_retries_409`."
+        },
+        {
+          "id": "B",
+          "text": "The remaining issue is a schema migration hash mismatch."
+        },
+        {
+          "id": "C",
+          "text": "The real problem is a chart legend in the billing UI."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Re-edit `billing/webhook_schema.py` even though the migration is already done."
+        },
+        {
+          "id": "B",
+          "text": "Ignore the backend and build a billing analytics dashboard."
+        },
+        {
+          "id": "C",
+          "text": "Edit `billing/webhook_consumer.py` to handle the 409 retry path and rerun `pytest tests/test_webhook_consumer.py -q`."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "B",
+      "file": "A",
+      "constraint": "C",
+      "detail": "A",
+      "next_step": "C"
+    },
+    "state": {
+      "active_goal": "Finish the billing webhook rollout without repeating already completed setup work.",
+      "target_file": "billing/webhook_consumer.py",
+      "target_file_hint": "the webhook consumer module",
+      "latest_constraint": "Do not touch the already-migrated schema file.",
+      "latest_constraint_hint": "the schema work is already done",
+      "key_exact_detail": "The remaining failing test is `tests/test_webhook_consumer.py::test_retries_409`.",
+      "key_exact_detail_hint": "the retry-on-409 test",
+      "next_step": "Edit `billing/webhook_consumer.py` to handle the 409 retry path and rerun `pytest tests/test_webhook_consumer.py -q`.",
+      "completed_work": "Schema migration, secret loading, and endpoint registration are already complete.",
+      "open_issue": "Only the 409 retry behavior is still failing."
+    }
+  },
+  {
+    "task_id": "ns02",
+    "family": "next_step_continuity",
+    "scenario": "Markdown export pipeline",
+    "failure_mode": "repeating completed template work",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the markdown export pipeline. Finish the markdown export pipeline so scheduled exports stop failing."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `exports/template_loader.py` and follow this rule: Rework template loading again before touching runtime output."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: Template lookup, scheduler wiring, and storage writes are already fixed."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The remaining issue is the missing `front_matter` block."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: Only the output formatting step is still broken."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `exports/markdown_export.py`. Also, the latest rule is: Template loading is already fixed; do not redo that part."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `exports/markdown_export.py` and keep in mind that some earlier setup work is already finished, so the next action should not repeat it."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: Only the output formatting step is still broken."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Migrate exports to PDF first."
+        },
+        {
+          "id": "B",
+          "text": "Add a new export history page."
+        },
+        {
+          "id": "C",
+          "text": "Finish the markdown export pipeline so scheduled exports stop failing."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "exports/template_loader.py"
+        },
+        {
+          "id": "B",
+          "text": "exports/markdown_export.py"
+        },
+        {
+          "id": "C",
+          "text": "tests/test_markdown_export.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Template loading is already fixed; do not redo that part."
+        },
+        {
+          "id": "B",
+          "text": "Rework template loading again before touching runtime output."
+        },
+        {
+          "id": "C",
+          "text": "Pause exports and only add a history page."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The remaining issue is a broken template path."
+        },
+        {
+          "id": "B",
+          "text": "The remaining issue is the missing `front_matter` block."
+        },
+        {
+          "id": "C",
+          "text": "The actual problem is a color mismatch in the export page."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Edit `exports/markdown_export.py` to restore the `front_matter` block and rerun `pytest tests/test_markdown_export.py -q`."
+        },
+        {
+          "id": "B",
+          "text": "Re-edit `exports/template_loader.py` even though template loading already works."
+        },
+        {
+          "id": "C",
+          "text": "Ignore the worker and build an export history page."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "C",
+      "file": "B",
+      "constraint": "A",
+      "detail": "B",
+      "next_step": "A"
+    },
+    "state": {
+      "active_goal": "Finish the markdown export pipeline so scheduled exports stop failing.",
+      "target_file": "exports/markdown_export.py",
+      "target_file_hint": "the markdown export worker",
+      "latest_constraint": "Template loading is already fixed; do not redo that part.",
+      "latest_constraint_hint": "template loading is already done",
+      "key_exact_detail": "The remaining issue is the missing `front_matter` block.",
+      "key_exact_detail_hint": "the missing front matter block",
+      "next_step": "Edit `exports/markdown_export.py` to restore the `front_matter` block and rerun `pytest tests/test_markdown_export.py -q`.",
+      "completed_work": "Template lookup, scheduler wiring, and storage writes are already fixed.",
+      "open_issue": "Only the output formatting step is still broken."
+    }
+  },
+  {
+    "task_id": "ns03",
+    "family": "next_step_continuity",
+    "scenario": "Notification digest job",
+    "failure_mode": "repeating completed query work",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the notification digest job. Finish the notification digest job so daily digests send once per user."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `jobs/query_digest_candidates.py` and follow this rule: Revisit the candidate selection query before handling sends."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: Candidate selection, template rendering, and enqueue logic are already working."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The remaining failing case is duplicate sends for `user_id=42`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: Only the duplicate-send guard is still missing."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `jobs/daily_digest.py`. Also, the latest rule is: Candidate selection is already correct; do not revisit that query."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `jobs/daily_digest.py` and keep in mind that some earlier setup work is already finished, so the next action should not repeat it."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: Only the duplicate-send guard is still missing."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Finish the notification digest job so daily digests send once per user."
+        },
+        {
+          "id": "B",
+          "text": "Create a whole new notification center UI."
+        },
+        {
+          "id": "C",
+          "text": "Replace the digest job with a third-party product."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "jobs/query_digest_candidates.py"
+        },
+        {
+          "id": "B",
+          "text": "jobs/daily_digest.py"
+        },
+        {
+          "id": "C",
+          "text": "tests/test_daily_digest.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Revisit the candidate selection query before handling sends."
+        },
+        {
+          "id": "B",
+          "text": "Pause digests and focus on a new UI."
+        },
+        {
+          "id": "C",
+          "text": "Candidate selection is already correct; do not revisit that query."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The remaining issue is an empty candidate list."
+        },
+        {
+          "id": "B",
+          "text": "The remaining failing case is duplicate sends for `user_id=42`."
+        },
+        {
+          "id": "C",
+          "text": "The real issue is the spacing in the notification center mockup."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Edit `jobs/daily_digest.py` to prevent duplicate sends for `user_id=42` and rerun `pytest tests/test_daily_digest.py -q`."
+        },
+        {
+          "id": "B",
+          "text": "Re-edit `jobs/query_digest_candidates.py` even though the query is already correct."
+        },
+        {
+          "id": "C",
+          "text": "Ignore the backend and build a notification center UI."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "A",
+      "file": "B",
+      "constraint": "C",
+      "detail": "B",
+      "next_step": "A"
+    },
+    "state": {
+      "active_goal": "Finish the notification digest job so daily digests send once per user.",
+      "target_file": "jobs/daily_digest.py",
+      "target_file_hint": "the daily digest job",
+      "latest_constraint": "Candidate selection is already correct; do not revisit that query.",
+      "latest_constraint_hint": "candidate selection is already done",
+      "key_exact_detail": "The remaining failing case is duplicate sends for `user_id=42`.",
+      "key_exact_detail_hint": "the duplicate send for user 42",
+      "next_step": "Edit `jobs/daily_digest.py` to prevent duplicate sends for `user_id=42` and rerun `pytest tests/test_daily_digest.py -q`.",
+      "completed_work": "Candidate selection, template rendering, and enqueue logic are already working.",
+      "open_issue": "Only the duplicate-send guard is still missing."
+    }
+  },
+  {
+    "task_id": "ns04",
+    "family": "next_step_continuity",
+    "scenario": "Role sync command",
+    "failure_mode": "repeating completed mapping work",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the role sync command. Finish the role sync command so stale group memberships stop persisting."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `auth/role_mapping.py` and follow this rule: Rework the role mapping table before touching the sync path."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: The mapping table, dry-run mode, and group fetch already work."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The remaining issue is that removed groups still leave `editor` assignments behind."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: Only stale assignment cleanup is still missing."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `cli/sync_roles.py`. Also, the latest rule is: Role mapping is already correct; do not redo that table."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `cli/sync_roles.py` and keep in mind that some earlier setup work is already finished, so the next action should not repeat it."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: Only stale assignment cleanup is still missing."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Build a new admin page for roles first."
+        },
+        {
+          "id": "B",
+          "text": "Finish the role sync command so stale group memberships stop persisting."
+        },
+        {
+          "id": "C",
+          "text": "Replace the role system with an external provider."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "auth/role_mapping.py"
+        },
+        {
+          "id": "B",
+          "text": "tests/test_sync_roles.py"
+        },
+        {
+          "id": "C",
+          "text": "cli/sync_roles.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Role mapping is already correct; do not redo that table."
+        },
+        {
+          "id": "B",
+          "text": "Rework the role mapping table before touching the sync path."
+        },
+        {
+          "id": "C",
+          "text": "Pause sync work and redesign role management."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The remaining issue is a missing role mapping entry."
+        },
+        {
+          "id": "B",
+          "text": "The actual problem is a typo in the admin page heading."
+        },
+        {
+          "id": "C",
+          "text": "The remaining issue is that removed groups still leave `editor` assignments behind."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Re-edit `auth/role_mapping.py` even though the mapping table is already correct."
+        },
+        {
+          "id": "B",
+          "text": "Edit `cli/sync_roles.py` to clear stale `editor` assignments and rerun `pytest tests/test_sync_roles.py -q`."
+        },
+        {
+          "id": "C",
+          "text": "Ignore the CLI and redesign role management."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "B",
+      "file": "C",
+      "constraint": "A",
+      "detail": "C",
+      "next_step": "B"
+    },
+    "state": {
+      "active_goal": "Finish the role sync command so stale group memberships stop persisting.",
+      "target_file": "cli/sync_roles.py",
+      "target_file_hint": "the role sync CLI",
+      "latest_constraint": "Role mapping is already correct; do not redo that table.",
+      "latest_constraint_hint": "role mapping is already done",
+      "key_exact_detail": "The remaining issue is that removed groups still leave `editor` assignments behind.",
+      "key_exact_detail_hint": "the stale editor assignment issue",
+      "next_step": "Edit `cli/sync_roles.py` to clear stale `editor` assignments and rerun `pytest tests/test_sync_roles.py -q`.",
+      "completed_work": "The mapping table, dry-run mode, and group fetch already work.",
+      "open_issue": "Only stale assignment cleanup is still missing."
+    }
+  },
+  {
+    "task_id": "ns05",
+    "family": "next_step_continuity",
+    "scenario": "Theme asset cache refresh",
+    "failure_mode": "repeating completed upload work",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the theme asset cache refresh. Finish the theme asset cache refresh so new logos appear after publish."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `themes/upload_assets.py` and follow this rule: Redo uploads before touching refresh invalidation."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: Uploads, manifest writes, and publish hooks are already complete."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The remaining issue is the stale cache key for `logo_dark.svg`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: Only cache invalidation for the new logo still fails."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `themes/refresh_assets.py`. Also, the latest rule is: Uploads already work; do not revisit the upload path."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `themes/refresh_assets.py` and keep in mind that some earlier setup work is already finished, so the next action should not repeat it."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: Only cache invalidation for the new logo still fails."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Rebuild the entire theming system first."
+        },
+        {
+          "id": "B",
+          "text": "Create a theme preview gallery."
+        },
+        {
+          "id": "C",
+          "text": "Finish the theme asset cache refresh so new logos appear after publish."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "themes/refresh_assets.py"
+        },
+        {
+          "id": "B",
+          "text": "themes/upload_assets.py"
+        },
+        {
+          "id": "C",
+          "text": "tests/test_refresh_assets.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Redo uploads before touching refresh invalidation."
+        },
+        {
+          "id": "B",
+          "text": "Uploads already work; do not revisit the upload path."
+        },
+        {
+          "id": "C",
+          "text": "Stop the refresh job and focus on a theme gallery."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The remaining issue is the stale cache key for `logo_dark.svg`."
+        },
+        {
+          "id": "B",
+          "text": "The remaining issue is a missing upload form field."
+        },
+        {
+          "id": "C",
+          "text": "The actual problem is a layout mismatch in the gallery."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Re-edit `themes/upload_assets.py` even though uploads already work."
+        },
+        {
+          "id": "B",
+          "text": "Ignore the refresh job and build a theme preview gallery."
+        },
+        {
+          "id": "C",
+          "text": "Edit `themes/refresh_assets.py` to invalidate the stale `logo_dark.svg` cache key and rerun `pytest tests/test_refresh_assets.py -q`."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "C",
+      "file": "A",
+      "constraint": "B",
+      "detail": "A",
+      "next_step": "C"
+    },
+    "state": {
+      "active_goal": "Finish the theme asset cache refresh so new logos appear after publish.",
+      "target_file": "themes/refresh_assets.py",
+      "target_file_hint": "the theme asset refresh job",
+      "latest_constraint": "Uploads already work; do not revisit the upload path.",
+      "latest_constraint_hint": "uploads are already done",
+      "key_exact_detail": "The remaining issue is the stale cache key for `logo_dark.svg`.",
+      "key_exact_detail_hint": "the stale logo_dark cache key",
+      "next_step": "Edit `themes/refresh_assets.py` to invalidate the stale `logo_dark.svg` cache key and rerun `pytest tests/test_refresh_assets.py -q`.",
+      "completed_work": "Uploads, manifest writes, and publish hooks are already complete.",
+      "open_issue": "Only cache invalidation for the new logo still fails."
+    }
+  },
+  {
+    "task_id": "ns06",
+    "family": "next_step_continuity",
+    "scenario": "Slack notifier retry flow",
+    "failure_mode": "repeating completed formatting work",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the slack notifier retry flow. Finish the Slack notifier retry flow so transient API failures recover cleanly."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `notifications/message_builder.py` and follow this rule: Rewrite the message builder again before touching retries."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: Webhook loading, channel selection, and message formatting already work."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The remaining failure is a missing retry on `429 Too Many Requests`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: Only retry behavior on transient failures is still missing."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `notifications/slack_notifier.py`. Also, the latest rule is: Message formatting already works; do not rewrite the builder."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `notifications/slack_notifier.py` and keep in mind that some earlier setup work is already finished, so the next action should not repeat it."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: Only retry behavior on transient failures is still missing."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Finish the Slack notifier retry flow so transient API failures recover cleanly."
+        },
+        {
+          "id": "B",
+          "text": "Replace Slack notifications with email only."
+        },
+        {
+          "id": "C",
+          "text": "Design a new incident dashboard."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "notifications/message_builder.py"
+        },
+        {
+          "id": "B",
+          "text": "tests/test_slack_notifier.py"
+        },
+        {
+          "id": "C",
+          "text": "notifications/slack_notifier.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Rewrite the message builder again before touching retries."
+        },
+        {
+          "id": "B",
+          "text": "Message formatting already works; do not rewrite the builder."
+        },
+        {
+          "id": "C",
+          "text": "Pause Slack work and build an incident dashboard."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The remaining failure is bad markdown formatting."
+        },
+        {
+          "id": "B",
+          "text": "The actual issue is a chart label in the incident dashboard."
+        },
+        {
+          "id": "C",
+          "text": "The remaining failure is a missing retry on `429 Too Many Requests`."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Re-edit `notifications/message_builder.py` even though formatting already works."
+        },
+        {
+          "id": "B",
+          "text": "Edit `notifications/slack_notifier.py` to add a retry for `429 Too Many Requests` and rerun `pytest tests/test_slack_notifier.py -q`."
+        },
+        {
+          "id": "C",
+          "text": "Ignore the notifier and build an incident dashboard."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "A",
+      "file": "C",
+      "constraint": "B",
+      "detail": "C",
+      "next_step": "B"
+    },
+    "state": {
+      "active_goal": "Finish the Slack notifier retry flow so transient API failures recover cleanly.",
+      "target_file": "notifications/slack_notifier.py",
+      "target_file_hint": "the Slack notifier runtime",
+      "latest_constraint": "Message formatting already works; do not rewrite the builder.",
+      "latest_constraint_hint": "message formatting is already done",
+      "key_exact_detail": "The remaining failure is a missing retry on `429 Too Many Requests`.",
+      "key_exact_detail_hint": "the missing retry on 429",
+      "next_step": "Edit `notifications/slack_notifier.py` to add a retry for `429 Too Many Requests` and rerun `pytest tests/test_slack_notifier.py -q`.",
+      "completed_work": "Webhook loading, channel selection, and message formatting already work.",
+      "open_issue": "Only retry behavior on transient failures is still missing."
+    }
+  },
+  {
+    "task_id": "ns07",
+    "family": "next_step_continuity",
+    "scenario": "Audit log redaction",
+    "failure_mode": "repeating completed writer work",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the audit log redaction. Finish audit log redaction so secrets stop leaking into stored events."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `audit/write_events.py` and follow this rule: Rebuild the writer before touching redaction rules."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: Event writing, storage, and rotation already work."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The remaining missing rule is redacting `authorization` headers."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: Only the redaction rule set still needs the final header case."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `audit/redact_events.py`. Also, the latest rule is: Event writing already works; do not touch the writer unless needed."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `audit/redact_events.py` and keep in mind that some earlier setup work is already finished, so the next action should not repeat it."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: Only the redaction rule set still needs the final header case."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Create an audit log viewer UI first."
+        },
+        {
+          "id": "B",
+          "text": "Finish audit log redaction so secrets stop leaking into stored events."
+        },
+        {
+          "id": "C",
+          "text": "Replace the entire audit system with a vendor product."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "audit/redact_events.py"
+        },
+        {
+          "id": "B",
+          "text": "audit/write_events.py"
+        },
+        {
+          "id": "C",
+          "text": "tests/test_redact_events.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Rebuild the writer before touching redaction rules."
+        },
+        {
+          "id": "B",
+          "text": "Pause redaction work and build a log viewer."
+        },
+        {
+          "id": "C",
+          "text": "Event writing already works; do not touch the writer unless needed."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The remaining missing rule is redacting `authorization` headers."
+        },
+        {
+          "id": "B",
+          "text": "The remaining issue is a write timeout in the event writer."
+        },
+        {
+          "id": "C",
+          "text": "The actual issue is the viewer color palette."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Re-edit `audit/write_events.py` even though event writing already works."
+        },
+        {
+          "id": "B",
+          "text": "Ignore redaction and build an audit log viewer."
+        },
+        {
+          "id": "C",
+          "text": "Edit `audit/redact_events.py` to redact `authorization` headers and rerun `pytest tests/test_redact_events.py -q`."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "B",
+      "file": "A",
+      "constraint": "C",
+      "detail": "A",
+      "next_step": "C"
+    },
+    "state": {
+      "active_goal": "Finish audit log redaction so secrets stop leaking into stored events.",
+      "target_file": "audit/redact_events.py",
+      "target_file_hint": "the audit redaction helper",
+      "latest_constraint": "Event writing already works; do not touch the writer unless needed.",
+      "latest_constraint_hint": "event writing is already done",
+      "key_exact_detail": "The remaining missing rule is redacting `authorization` headers.",
+      "key_exact_detail_hint": "the authorization-header redaction rule",
+      "next_step": "Edit `audit/redact_events.py` to redact `authorization` headers and rerun `pytest tests/test_redact_events.py -q`.",
+      "completed_work": "Event writing, storage, and rotation already work.",
+      "open_issue": "Only the redaction rule set still needs the final header case."
+    }
+  },
+  {
+    "task_id": "ns08",
+    "family": "next_step_continuity",
+    "scenario": "Image thumbnail worker",
+    "failure_mode": "repeating completed uploader work",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the image thumbnail worker. Finish the thumbnail worker so portrait uploads stop cropping faces."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `media/upload_handler.py` and follow this rule: Redo upload handling before touching resizing logic."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: Upload handling, file persistence, and job enqueueing already work."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The remaining failing case is the portrait crop preset `cover_portrait`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: Only the portrait crop preset still fails."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `media/thumbnail_worker.py`. Also, the latest rule is: Upload handling already works; do not revisit the uploader."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `media/thumbnail_worker.py` and keep in mind that some earlier setup work is already finished, so the next action should not repeat it."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: Only the portrait crop preset still fails."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "We compacted the earlier session because the chat was getting long."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I can resume once I recover the active task state from the earlier context."
+      },
+      {
+        "speaker": "user",
+        "text": "Please recover the current state exactly before taking the next step."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Build a whole new media gallery UI."
+        },
+        {
+          "id": "B",
+          "text": "Switch all image processing to a hosted service."
+        },
+        {
+          "id": "C",
+          "text": "Finish the thumbnail worker so portrait uploads stop cropping faces."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "media/upload_handler.py"
+        },
+        {
+          "id": "B",
+          "text": "media/thumbnail_worker.py"
+        },
+        {
+          "id": "C",
+          "text": "tests/test_thumbnail_worker.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Upload handling already works; do not revisit the uploader."
+        },
+        {
+          "id": "B",
+          "text": "Redo upload handling before touching resizing logic."
+        },
+        {
+          "id": "C",
+          "text": "Pause worker fixes and design a media gallery."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The remaining issue is a missing upload MIME check."
+        },
+        {
+          "id": "B",
+          "text": "The remaining failing case is the portrait crop preset `cover_portrait`."
+        },
+        {
+          "id": "C",
+          "text": "The actual issue is a spacing bug in the gallery page."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Edit `media/thumbnail_worker.py` to fix the `cover_portrait` crop path and rerun `pytest tests/test_thumbnail_worker.py -q`."
+        },
+        {
+          "id": "B",
+          "text": "Re-edit `media/upload_handler.py` even though uploads already work."
+        },
+        {
+          "id": "C",
+          "text": "Ignore the worker and design a media gallery."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "C",
+      "file": "B",
+      "constraint": "A",
+      "detail": "B",
+      "next_step": "A"
+    },
+    "state": {
+      "active_goal": "Finish the thumbnail worker so portrait uploads stop cropping faces.",
+      "target_file": "media/thumbnail_worker.py",
+      "target_file_hint": "the thumbnail worker",
+      "latest_constraint": "Upload handling already works; do not revisit the uploader.",
+      "latest_constraint_hint": "upload handling is already done",
+      "key_exact_detail": "The remaining failing case is the portrait crop preset `cover_portrait`.",
+      "key_exact_detail_hint": "the failing cover_portrait preset",
+      "next_step": "Edit `media/thumbnail_worker.py` to fix the `cover_portrait` crop path and rerun `pytest tests/test_thumbnail_worker.py -q`.",
+      "completed_work": "Upload handling, file persistence, and job enqueueing already work.",
+      "open_issue": "Only the portrait crop preset still fails."
+    }
+  },
+  {
+    "task_id": "lc01_hard",
+    "family": "latest_constraint",
+    "scenario": "Flask user search endpoint hard variant",
+    "failure_mode": "late database constraint correction plus multiple stale branches",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the flask user search endpoint. Finish the Flask user search endpoint so filtered queries work again."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `api/routes/users.py` and follow this rule: Keep the old SQLite LIKE query because production still mirrors local dev."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: The request parser and pagination fix are already done."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: Remember that the failing case is `GET /users/search?q=jo` returning an empty list."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The search handler is still using the outdated SQLite query path."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Interim branch note: I briefly switched to `api/routes/users.py` and followed this now-obsolete rule: Keep the old SQLite LIKE query because production still mirrors local dev."
+      },
+      {
+        "speaker": "tool",
+        "text": "Legacy scratch note that should now be ignored: The old failure was a timeout on `GET /users?page=2`."
+      },
+      {
+        "speaker": "user",
+        "text": "That interim branch is stale. Do not keep the temporary file, stale rule, or legacy scratch note."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. I will discard the stale branch and I will not follow this outdated next step: Edit `api/routes/users.py` and keep the SQLite query path in place."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `api/routes/user_search.py`. Also, the latest rule is: Use Postgres ILIKE filters and do not reintroduce SQLite-specific query code."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `api/routes/user_search.py` and keep in mind that the latest correction overrides the earlier plan."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The search handler is still using the outdated SQLite query path."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "I found a stale reminder from an abandoned branch. It says to work in `api/routes/users.py` and to use this old direction: Keep the old SQLite LIKE query because production still mirrors local dev."
+      },
+      {
+        "speaker": "tool",
+        "text": "Stale reminder detail that may be wrong: The old failure was a timeout on `GET /users?page=2`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "That note looks stale. I should not trust the reminder file, rule, detail, or next step until I reconcile it with the earlier session."
+      },
+      {
+        "speaker": "user",
+        "text": "Exactly. Recover the real final state from the earlier context, not the stale reminder, before you continue."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I will ignore the stale reminder unless the earlier context confirms this old next step: Edit `api/routes/users.py` and keep the SQLite query path in place."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Finish the Flask user search endpoint so filtered queries work again."
+        },
+        {
+          "id": "B",
+          "text": "Rewrite the React search modal for the user dashboard."
+        },
+        {
+          "id": "C",
+          "text": "Add a new Elasticsearch cluster for user search."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "api/routes/users.py"
+        },
+        {
+          "id": "B",
+          "text": "api/routes/user_search.py"
+        },
+        {
+          "id": "C",
+          "text": "tests/api/test_user_search.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Keep the old SQLite LIKE query because production still mirrors local dev."
+        },
+        {
+          "id": "B",
+          "text": "Move the search to Elasticsearch before fixing the endpoint."
+        },
+        {
+          "id": "C",
+          "text": "Use Postgres ILIKE filters and do not reintroduce SQLite-specific query code."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The old failure was a timeout on `GET /users?page=2`."
+        },
+        {
+          "id": "B",
+          "text": "Remember that the failing case is `GET /users/search?q=jo` returning an empty list."
+        },
+        {
+          "id": "C",
+          "text": "The main issue is a CSS overflow in the search drawer."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Edit `api/routes/user_search.py` to switch the query builder to Postgres ILIKE and rerun `pytest tests/api/test_user_search.py -q`."
+        },
+        {
+          "id": "B",
+          "text": "Edit `api/routes/users.py` and keep the SQLite query path in place."
+        },
+        {
+          "id": "C",
+          "text": "Skip the backend and only change the search modal placeholder text."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "A",
+      "file": "B",
+      "constraint": "C",
+      "detail": "B",
+      "next_step": "A"
+    },
+    "state": {
+      "active_goal": "Finish the Flask user search endpoint so filtered queries work again.",
+      "target_file": "api/routes/user_search.py",
+      "target_file_hint": "the user search route module",
+      "latest_constraint": "Use Postgres ILIKE filters and do not reintroduce SQLite-specific query code.",
+      "latest_constraint_hint": "the newer Postgres-only query rule",
+      "key_exact_detail": "Remember that the failing case is `GET /users/search?q=jo` returning an empty list.",
+      "key_exact_detail_hint": "the empty-result search regression on `q=jo`",
+      "next_step": "Edit `api/routes/user_search.py` to switch the query builder to Postgres ILIKE and rerun `pytest tests/api/test_user_search.py -q`.",
+      "completed_work": "The request parser and pagination fix are already done.",
+      "open_issue": "The search handler is still using the outdated SQLite query path."
+    }
+  },
+  {
+    "task_id": "lc02_hard",
+    "family": "latest_constraint",
+    "scenario": "CSV ingestion worker hard variant",
+    "failure_mode": "late dependency restriction plus multiple stale branches",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the csv ingestion worker. Restore the nightly CSV ingestion worker without changing the upstream file format."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `workers/import_runner.py` and follow this rule: Add pandas and rewrite the parser around DataFrames."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: The retry wrapper and checkpoint writes already work."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: Preserve the exact delimiter override `delimiter='|'` for partner feeds."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The parser fix still points at the wrong dependency choice."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Interim branch note: I briefly switched to `workers/import_runner.py` and followed this now-obsolete rule: Add pandas and rewrite the parser around DataFrames."
+      },
+      {
+        "speaker": "tool",
+        "text": "Legacy scratch note that should now be ignored: The only important flag is `delimiter=','` for local tests."
+      },
+      {
+        "speaker": "user",
+        "text": "That interim branch is stale. Do not keep the temporary file, stale rule, or legacy scratch note."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. I will discard the stale branch and I will not follow this outdated next step: Rewrite the importer with pandas in `workers/import_runner.py`."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `workers/csv_ingest.py`. Also, the latest rule is: Do not add pandas; keep the fix in the standard library parser."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `workers/csv_ingest.py` and keep in mind that the latest correction overrides the earlier plan."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The parser fix still points at the wrong dependency choice."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "I found a stale reminder from an abandoned branch. It says to work in `workers/import_runner.py` and to use this old direction: Add pandas and rewrite the parser around DataFrames."
+      },
+      {
+        "speaker": "tool",
+        "text": "Stale reminder detail that may be wrong: The only important flag is `delimiter=','` for local tests."
+      },
+      {
+        "speaker": "assistant",
+        "text": "That note looks stale. I should not trust the reminder file, rule, detail, or next step until I reconcile it with the earlier session."
+      },
+      {
+        "speaker": "user",
+        "text": "Exactly. Recover the real final state from the earlier context, not the stale reminder, before you continue."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I will ignore the stale reminder unless the earlier context confirms this old next step: Rewrite the importer with pandas in `workers/import_runner.py`."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Migrate the ingestion pipeline to Avro first."
+        },
+        {
+          "id": "B",
+          "text": "Restore the nightly CSV ingestion worker without changing the upstream file format."
+        },
+        {
+          "id": "C",
+          "text": "Add a brand new upload UI for CSV imports."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "workers/import_runner.py"
+        },
+        {
+          "id": "B",
+          "text": "scripts/replay_csv_job.sh"
+        },
+        {
+          "id": "C",
+          "text": "workers/csv_ingest.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Do not add pandas; keep the fix in the standard library parser."
+        },
+        {
+          "id": "B",
+          "text": "Add pandas and rewrite the parser around DataFrames."
+        },
+        {
+          "id": "C",
+          "text": "Switch the job to read Parquet instead of CSV."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The only important flag is `delimiter=','` for local tests."
+        },
+        {
+          "id": "B",
+          "text": "The main problem is an S3 bucket policy change."
+        },
+        {
+          "id": "C",
+          "text": "Preserve the exact delimiter override `delimiter='|'` for partner feeds."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Rewrite the importer with pandas in `workers/import_runner.py`."
+        },
+        {
+          "id": "B",
+          "text": "Update `workers/csv_ingest.py` to keep the standard library parser, preserve `delimiter='|'`, and rerun `python scripts/replay_csv_job.sh --sample partner_feed`."
+        },
+        {
+          "id": "C",
+          "text": "Ignore the parser and work on the upload UI instead."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "B",
+      "file": "C",
+      "constraint": "A",
+      "detail": "C",
+      "next_step": "B"
+    },
+    "state": {
+      "active_goal": "Restore the nightly CSV ingestion worker without changing the upstream file format.",
+      "target_file": "workers/csv_ingest.py",
+      "target_file_hint": "the CSV ingest worker",
+      "latest_constraint": "Do not add pandas; keep the fix in the standard library parser.",
+      "latest_constraint_hint": "the no-new-dependency parsing rule",
+      "key_exact_detail": "Preserve the exact delimiter override `delimiter='|'` for partner feeds.",
+      "key_exact_detail_hint": "the pipe-delimiter override for partner feeds",
+      "next_step": "Update `workers/csv_ingest.py` to keep the standard library parser, preserve `delimiter='|'`, and rerun `python scripts/replay_csv_job.sh --sample partner_feed`.",
+      "completed_work": "The retry wrapper and checkpoint writes already work.",
+      "open_issue": "The parser fix still points at the wrong dependency choice."
+    }
+  },
+  {
+    "task_id": "bd01_hard",
+    "family": "brittle_detail",
+    "scenario": "Docker compose startup command hard variant",
+    "failure_mode": "lost exact startup command plus multiple stale branches",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the docker compose startup command. Recover the local compose startup flow for the API and worker stack."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `docker/Dockerfile.api` and follow this rule: Rename the API and worker services to make the stack clearer."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: The images build successfully and env files load."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The exact startup command is `docker compose -f docker/docker-compose.dev.yml up api worker`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The dev startup instructions still point at the wrong command."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Interim branch note: I briefly switched to `docker/Dockerfile.api` and followed this now-obsolete rule: Rename the API and worker services to make the stack clearer."
+      },
+      {
+        "speaker": "tool",
+        "text": "Legacy scratch note that should now be ignored: The old command was `docker compose up db cache`."
+      },
+      {
+        "speaker": "user",
+        "text": "That interim branch is stale. Do not keep the temporary file, stale rule, or legacy scratch note."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. I will discard the stale branch and I will not follow this outdated next step: Rename the services and only start db plus cache."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `docker/docker-compose.dev.yml`. Also, the latest rule is: Keep the existing service names; do not rename containers while debugging."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `docker/docker-compose.dev.yml` and keep in mind that the exact brittle detail matters more than the earlier rough description."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The dev startup instructions still point at the wrong command."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "I found a stale reminder from an abandoned branch. It says to work in `docker/Dockerfile.api` and to use this old direction: Rename the API and worker services to make the stack clearer."
+      },
+      {
+        "speaker": "tool",
+        "text": "Stale reminder detail that may be wrong: The old command was `docker compose up db cache`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "That note looks stale. I should not trust the reminder file, rule, detail, or next step until I reconcile it with the earlier session."
+      },
+      {
+        "speaker": "user",
+        "text": "Exactly. Recover the real final state from the earlier context, not the stale reminder, before you continue."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I will ignore the stale reminder unless the earlier context confirms this old next step: Rename the services and only start db plus cache."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Replace Docker Compose with Kubernetes manifests."
+        },
+        {
+          "id": "B",
+          "text": "Design a new local setup walkthrough page."
+        },
+        {
+          "id": "C",
+          "text": "Recover the local compose startup flow for the API and worker stack."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "docker/docker-compose.dev.yml"
+        },
+        {
+          "id": "B",
+          "text": "docker/Dockerfile.api"
+        },
+        {
+          "id": "C",
+          "text": "scripts/dev_up.sh"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Rename the API and worker services to make the stack clearer."
+        },
+        {
+          "id": "B",
+          "text": "Keep the existing service names; do not rename containers while debugging."
+        },
+        {
+          "id": "C",
+          "text": "Move the whole stack to Nomad before debugging."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The exact startup command is `docker compose -f docker/docker-compose.dev.yml up api worker`."
+        },
+        {
+          "id": "B",
+          "text": "The old command was `docker compose up db cache`."
+        },
+        {
+          "id": "C",
+          "text": "The issue is just a broken screenshot in the docs."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Rename the services and only start db plus cache."
+        },
+        {
+          "id": "B",
+          "text": "Skip the compose file and edit the docs screenshot."
+        },
+        {
+          "id": "C",
+          "text": "Use `docker compose -f docker/docker-compose.dev.yml up api worker` and keep the service names unchanged while fixing `docker/docker-compose.dev.yml`."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "C",
+      "file": "A",
+      "constraint": "B",
+      "detail": "A",
+      "next_step": "C"
+    },
+    "state": {
+      "active_goal": "Recover the local compose startup flow for the API and worker stack.",
+      "target_file": "docker/docker-compose.dev.yml",
+      "target_file_hint": "the dev compose configuration",
+      "latest_constraint": "Keep the existing service names; do not rename containers while debugging.",
+      "latest_constraint_hint": "the keep-service-names rule",
+      "key_exact_detail": "The exact startup command is `docker compose -f docker/docker-compose.dev.yml up api worker`.",
+      "key_exact_detail_hint": "the compose command that starts only api and worker",
+      "next_step": "Use `docker compose -f docker/docker-compose.dev.yml up api worker` and keep the service names unchanged while fixing `docker/docker-compose.dev.yml`.",
+      "completed_work": "The images build successfully and env files load.",
+      "open_issue": "The dev startup instructions still point at the wrong command."
+    }
+  },
+  {
+    "task_id": "bd02_hard",
+    "family": "brittle_detail",
+    "scenario": "Regex validator hard variant",
+    "failure_mode": "lost exact regex detail plus multiple stale branches",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the regex validator. Fix the coupon code validator without changing the accepted format."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `routes/coupons.py` and follow this rule: Accept any alphanumeric string to reduce user friction."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: The parser and normalization step already work."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The exact regex is `^[A-Z]{3}-\\d{4}$`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: The exact regex was dropped during refactoring."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Interim branch note: I briefly switched to `routes/coupons.py` and followed this now-obsolete rule: Accept any alphanumeric string to reduce user friction."
+      },
+      {
+        "speaker": "tool",
+        "text": "Legacy scratch note that should now be ignored: The old regex was `^[A-Z0-9]{4,8}$`."
+      },
+      {
+        "speaker": "user",
+        "text": "That interim branch is stale. Do not keep the temporary file, stale rule, or legacy scratch note."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. I will discard the stale branch and I will not follow this outdated next step: Edit `routes/coupons.py` and widen the format to any alphanumeric string."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `validators/coupon_code.py`. Also, the latest rule is: Do not widen the accepted pattern; the existing format stays strict."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `validators/coupon_code.py` and keep in mind that the exact brittle detail matters more than the earlier rough description."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: The exact regex was dropped during refactoring."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "I found a stale reminder from an abandoned branch. It says to work in `routes/coupons.py` and to use this old direction: Accept any alphanumeric string to reduce user friction."
+      },
+      {
+        "speaker": "tool",
+        "text": "Stale reminder detail that may be wrong: The old regex was `^[A-Z0-9]{4,8}$`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "That note looks stale. I should not trust the reminder file, rule, detail, or next step until I reconcile it with the earlier session."
+      },
+      {
+        "speaker": "user",
+        "text": "Exactly. Recover the real final state from the earlier context, not the stale reminder, before you continue."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I will ignore the stale reminder unless the earlier context confirms this old next step: Edit `routes/coupons.py` and widen the format to any alphanumeric string."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Fix the coupon code validator without changing the accepted format."
+        },
+        {
+          "id": "B",
+          "text": "Rebrand coupon codes with a brand-new format."
+        },
+        {
+          "id": "C",
+          "text": "Build a coupon admin UI first."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "routes/coupons.py"
+        },
+        {
+          "id": "B",
+          "text": "tests/test_coupon_code.py"
+        },
+        {
+          "id": "C",
+          "text": "validators/coupon_code.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Accept any alphanumeric string to reduce user friction."
+        },
+        {
+          "id": "B",
+          "text": "Do not widen the accepted pattern; the existing format stays strict."
+        },
+        {
+          "id": "C",
+          "text": "Move validation into the browser first."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The old regex was `^[A-Z0-9]{4,8}$`."
+        },
+        {
+          "id": "B",
+          "text": "The issue is a color mismatch in the coupon modal."
+        },
+        {
+          "id": "C",
+          "text": "The exact regex is `^[A-Z]{3}-\\d{4}$`."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Edit `routes/coupons.py` and widen the format to any alphanumeric string."
+        },
+        {
+          "id": "B",
+          "text": "Edit `validators/coupon_code.py` to preserve `^[A-Z]{3}-\\d{4}$` and rerun `pytest tests/test_coupon_code.py -q`."
+        },
+        {
+          "id": "C",
+          "text": "Skip validation and restyle the coupon modal."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "A",
+      "file": "C",
+      "constraint": "B",
+      "detail": "C",
+      "next_step": "B"
+    },
+    "state": {
+      "active_goal": "Fix the coupon code validator without changing the accepted format.",
+      "target_file": "validators/coupon_code.py",
+      "target_file_hint": "the coupon validator module",
+      "latest_constraint": "Do not widen the accepted pattern; the existing format stays strict.",
+      "latest_constraint_hint": "the keep-the-format-strict rule",
+      "key_exact_detail": "The exact regex is `^[A-Z]{3}-\\d{4}$`.",
+      "key_exact_detail_hint": "the three-letters dash four-digits regex",
+      "next_step": "Edit `validators/coupon_code.py` to preserve `^[A-Z]{3}-\\d{4}$` and rerun `pytest tests/test_coupon_code.py -q`.",
+      "completed_work": "The parser and normalization step already work.",
+      "open_issue": "The exact regex was dropped during refactoring."
+    }
+  },
+  {
+    "task_id": "ns01_hard",
+    "family": "next_step_continuity",
+    "scenario": "Billing webhook rollout hard variant",
+    "failure_mode": "repeating completed schema work plus multiple stale branches",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the billing webhook rollout. Finish the billing webhook rollout without repeating already completed setup work."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `billing/webhook_schema.py` and follow this rule: Revisit the schema migration before touching runtime logic."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: Schema migration, secret loading, and endpoint registration are already complete."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The remaining failing test is `tests/test_webhook_consumer.py::test_retries_409`."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: Only the 409 retry behavior is still failing."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Interim branch note: I briefly switched to `billing/webhook_schema.py` and followed this now-obsolete rule: Revisit the schema migration before touching runtime logic."
+      },
+      {
+        "speaker": "tool",
+        "text": "Legacy scratch note that should now be ignored: The remaining issue is a schema migration hash mismatch."
+      },
+      {
+        "speaker": "user",
+        "text": "That interim branch is stale. Do not keep the temporary file, stale rule, or legacy scratch note."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. I will discard the stale branch and I will not follow this outdated next step: Re-edit `billing/webhook_schema.py` even though the migration is already done."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `billing/webhook_consumer.py`. Also, the latest rule is: Do not touch the already-migrated schema file."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `billing/webhook_consumer.py` and keep in mind that some earlier setup work is already finished, so the next action should not repeat it."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: Only the 409 retry behavior is still failing."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "I found a stale reminder from an abandoned branch. It says to work in `billing/webhook_schema.py` and to use this old direction: Revisit the schema migration before touching runtime logic."
+      },
+      {
+        "speaker": "tool",
+        "text": "Stale reminder detail that may be wrong: The remaining issue is a schema migration hash mismatch."
+      },
+      {
+        "speaker": "assistant",
+        "text": "That note looks stale. I should not trust the reminder file, rule, detail, or next step until I reconcile it with the earlier session."
+      },
+      {
+        "speaker": "user",
+        "text": "Exactly. Recover the real final state from the earlier context, not the stale reminder, before you continue."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I will ignore the stale reminder unless the earlier context confirms this old next step: Re-edit `billing/webhook_schema.py` even though the migration is already done."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Build a billing analytics dashboard first."
+        },
+        {
+          "id": "B",
+          "text": "Finish the billing webhook rollout without repeating already completed setup work."
+        },
+        {
+          "id": "C",
+          "text": "Replace billing webhooks with a polling job."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "billing/webhook_consumer.py"
+        },
+        {
+          "id": "B",
+          "text": "billing/webhook_schema.py"
+        },
+        {
+          "id": "C",
+          "text": "tests/test_webhook_consumer.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Revisit the schema migration before touching runtime logic."
+        },
+        {
+          "id": "B",
+          "text": "Pause rollout and redesign webhook payloads."
+        },
+        {
+          "id": "C",
+          "text": "Do not touch the already-migrated schema file."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The remaining failing test is `tests/test_webhook_consumer.py::test_retries_409`."
+        },
+        {
+          "id": "B",
+          "text": "The remaining issue is a schema migration hash mismatch."
+        },
+        {
+          "id": "C",
+          "text": "The real problem is a chart legend in the billing UI."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Re-edit `billing/webhook_schema.py` even though the migration is already done."
+        },
+        {
+          "id": "B",
+          "text": "Ignore the backend and build a billing analytics dashboard."
+        },
+        {
+          "id": "C",
+          "text": "Edit `billing/webhook_consumer.py` to handle the 409 retry path and rerun `pytest tests/test_webhook_consumer.py -q`."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "B",
+      "file": "A",
+      "constraint": "C",
+      "detail": "A",
+      "next_step": "C"
+    },
+    "state": {
+      "active_goal": "Finish the billing webhook rollout without repeating already completed setup work.",
+      "target_file": "billing/webhook_consumer.py",
+      "target_file_hint": "the webhook consumer module",
+      "latest_constraint": "Do not touch the already-migrated schema file.",
+      "latest_constraint_hint": "the schema work is already done",
+      "key_exact_detail": "The remaining failing test is `tests/test_webhook_consumer.py::test_retries_409`.",
+      "key_exact_detail_hint": "the retry-on-409 test",
+      "next_step": "Edit `billing/webhook_consumer.py` to handle the 409 retry path and rerun `pytest tests/test_webhook_consumer.py -q`.",
+      "completed_work": "Schema migration, secret loading, and endpoint registration are already complete.",
+      "open_issue": "Only the 409 retry behavior is still failing."
+    }
+  },
+  {
+    "task_id": "ns02_hard",
+    "family": "next_step_continuity",
+    "scenario": "Markdown export pipeline hard variant",
+    "failure_mode": "repeating completed template work plus multiple stale branches",
+    "prefix_turns": [
+      {
+        "speaker": "user",
+        "text": "We need to finish the markdown export pipeline. Finish the markdown export pipeline so scheduled exports stop failing."
+      },
+      {
+        "speaker": "assistant",
+        "text": "My first pass was to work in `exports/template_loader.py` and follow this rule: Rework template loading again before touching runtime output."
+      },
+      {
+        "speaker": "tool",
+        "text": "Status note: Template lookup, scheduler wiring, and storage writes are already fixed."
+      },
+      {
+        "speaker": "user",
+        "text": "Do not lose the key detail from this task: The remaining issue is the missing `front_matter` block."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. The remaining blocker seems to be: Only the output formatting step is still broken."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Interim branch note: I briefly switched to `exports/template_loader.py` and followed this now-obsolete rule: Rework template loading again before touching runtime output."
+      },
+      {
+        "speaker": "tool",
+        "text": "Legacy scratch note that should now be ignored: The remaining issue is a broken template path."
+      },
+      {
+        "speaker": "user",
+        "text": "That interim branch is stale. Do not keep the temporary file, stale rule, or legacy scratch note."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Understood. I will discard the stale branch and I will not follow this outdated next step: Re-edit `exports/template_loader.py` even though template loading already works."
+      },
+      {
+        "speaker": "user",
+        "text": "Correction: the active file is actually `exports/markdown_export.py`. Also, the latest rule is: Template loading is already fixed; do not redo that part."
+      },
+      {
+        "speaker": "assistant",
+        "text": "Thanks. I will update the plan around `exports/markdown_export.py` and keep in mind that some earlier setup work is already finished, so the next action should not repeat it."
+      },
+      {
+        "speaker": "tool",
+        "text": "Open issue recap: Only the output formatting step is still broken."
+      }
+    ],
+    "recent_turns": [
+      {
+        "speaker": "user",
+        "text": "I found a stale reminder from an abandoned branch. It says to work in `exports/template_loader.py` and to use this old direction: Rework template loading again before touching runtime output."
+      },
+      {
+        "speaker": "tool",
+        "text": "Stale reminder detail that may be wrong: The remaining issue is a broken template path."
+      },
+      {
+        "speaker": "assistant",
+        "text": "That note looks stale. I should not trust the reminder file, rule, detail, or next step until I reconcile it with the earlier session."
+      },
+      {
+        "speaker": "user",
+        "text": "Exactly. Recover the real final state from the earlier context, not the stale reminder, before you continue."
+      },
+      {
+        "speaker": "assistant",
+        "text": "I will ignore the stale reminder unless the earlier context confirms this old next step: Re-edit `exports/template_loader.py` even though template loading already works."
+      }
+    ],
+    "candidate_sets": {
+      "goal": [
+        {
+          "id": "A",
+          "text": "Migrate exports to PDF first."
+        },
+        {
+          "id": "B",
+          "text": "Add a new export history page."
+        },
+        {
+          "id": "C",
+          "text": "Finish the markdown export pipeline so scheduled exports stop failing."
+        }
+      ],
+      "file": [
+        {
+          "id": "A",
+          "text": "exports/template_loader.py"
+        },
+        {
+          "id": "B",
+          "text": "exports/markdown_export.py"
+        },
+        {
+          "id": "C",
+          "text": "tests/test_markdown_export.py"
+        }
+      ],
+      "constraint": [
+        {
+          "id": "A",
+          "text": "Template loading is already fixed; do not redo that part."
+        },
+        {
+          "id": "B",
+          "text": "Rework template loading again before touching runtime output."
+        },
+        {
+          "id": "C",
+          "text": "Pause exports and only add a history page."
+        }
+      ],
+      "detail": [
+        {
+          "id": "A",
+          "text": "The remaining issue is a broken template path."
+        },
+        {
+          "id": "B",
+          "text": "The remaining issue is the missing `front_matter` block."
+        },
+        {
+          "id": "C",
+          "text": "The actual problem is a color mismatch in the export page."
+        }
+      ],
+      "next_step": [
+        {
+          "id": "A",
+          "text": "Edit `exports/markdown_export.py` to restore the `front_matter` block and rerun `pytest tests/test_markdown_export.py -q`."
+        },
+        {
+          "id": "B",
+          "text": "Re-edit `exports/template_loader.py` even though template loading already works."
+        },
+        {
+          "id": "C",
+          "text": "Ignore the worker and build an export history page."
+        }
+      ]
+    },
+    "gold": {
+      "goal": "C",
+      "file": "B",
+      "constraint": "A",
+      "detail": "B",
+      "next_step": "A"
+    },
+    "state": {
+      "active_goal": "Finish the markdown export pipeline so scheduled exports stop failing.",
+      "target_file": "exports/markdown_export.py",
+      "target_file_hint": "the markdown export worker",
+      "latest_constraint": "Template loading is already fixed; do not redo that part.",
+      "latest_constraint_hint": "template loading is already done",
+      "key_exact_detail": "The remaining issue is the missing `front_matter` block.",
+      "key_exact_detail_hint": "the missing front matter block",
+      "next_step": "Edit `exports/markdown_export.py` to restore the `front_matter` block and rerun `pytest tests/test_markdown_export.py -q`.",
+      "completed_work": "Template lookup, scheduler wiring, and storage writes are already fixed.",
+      "open_issue": "Only the output formatting step is still broken."
+    }
+  }
+]

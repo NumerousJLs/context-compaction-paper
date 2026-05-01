@@ -1,0 +1,52 @@
+Recover the current coding-session state from the context below.
+Use only the provided session context and recent turns.
+Choose exactly one option ID for each field.
+Return JSON only with these keys: goal_id, file_id, constraint_id, detail_id, next_step_id.
+
+EARLIER SESSION:
+Turn 1 [User]: We need to finish the markdown export pipeline. Finish the markdown export pipeline so scheduled exports stop failing.
+Turn 2 [Assistant]: My first pass was to work in `exports/template_loader.py` and follow this rule: Rework template loading again before touching runtime output.
+Turn 3 [Tool]: Status note: Template lookup, scheduler wiring, and storage writes are already fixed.
+Turn 4 [User]: Do not lose the key detail from this task: The remaining issue is the missing `front_matter` block.
+Turn 5 [Assistant]: Understood. The remaining blocker seems to be: Only the output formatting step is still broken.
+Turn 6 [Assistant]: Interim branch note: I briefly switched to `exports/template_loader.py` and followed this now-obsolete rule: Rework template loading again before touching runtime output.
+Turn 7 [Tool]: Legacy scratch note that should now be ignored: The remaining issue is a broken template path.
+Turn 8 [User]: That interim branch is stale. Do not keep the temporary file, stale rule, or legacy scratch note.
+Turn 9 [Assistant]: Understood. I will discard the stale branch and I will not follow this outdated next step: Re-edit `exports/template_loader.py` even though template loading already works.
+Turn 10 [User]: Correction: the active file is actually `exports/markdown_export.py`. Also, the latest rule is: Template loading is already fixed; do not redo that part.
+Turn 11 [Assistant]: Thanks. I will update the plan around `exports/markdown_export.py` and keep in mind that some earlier setup work is already finished, so the next action should not repeat it.
+Turn 12 [Tool]: Open issue recap: Only the output formatting step is still broken.
+
+RECENT TURNS:
+Turn 1 [User]: I found a stale reminder from an abandoned branch. It says to work in `exports/template_loader.py` and to use this old direction: Rework template loading again before touching runtime output.
+Turn 2 [Tool]: Stale reminder detail that may be wrong: The remaining issue is a broken template path.
+Turn 3 [Assistant]: That note looks stale. I should not trust the reminder file, rule, detail, or next step until I reconcile it with the earlier session.
+Turn 4 [User]: Exactly. Recover the real final state from the earlier context, not the stale reminder, before you continue.
+Turn 5 [Assistant]: I will ignore the stale reminder unless the earlier context confirms this old next step: Re-edit `exports/template_loader.py` even though template loading already works.
+
+GOAL OPTIONS:
+  A: Migrate exports to PDF first.
+  B: Add a new export history page.
+  C: Finish the markdown export pipeline so scheduled exports stop failing.
+
+FILE OPTIONS:
+  A: exports/template_loader.py
+  B: exports/markdown_export.py
+  C: tests/test_markdown_export.py
+
+CONSTRAINT OPTIONS:
+  A: Template loading is already fixed; do not redo that part.
+  B: Rework template loading again before touching runtime output.
+  C: Pause exports and only add a history page.
+
+DETAIL OPTIONS:
+  A: The remaining issue is a broken template path.
+  B: The remaining issue is the missing `front_matter` block.
+  C: The actual problem is a color mismatch in the export page.
+
+NEXT_STEP OPTIONS:
+  A: Edit `exports/markdown_export.py` to restore the `front_matter` block and rerun `pytest tests/test_markdown_export.py -q`.
+  B: Re-edit `exports/template_loader.py` even though template loading already works.
+  C: Ignore the worker and build an export history page.
+
+Return strict JSON only.

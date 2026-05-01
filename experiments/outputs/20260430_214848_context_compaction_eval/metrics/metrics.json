@@ -1,0 +1,183 @@
+{
+  "condition_rows": [
+    {
+      "condition": "C0_full_transcript",
+      "n": 6,
+      "continuity_score": 1.0,
+      "avg_prompt_tokens": 793.0,
+      "avg_output_tokens": 50.0,
+      "avg_total_tokens": 843.0,
+      "avg_elapsed_seconds": 11.917364716529846,
+      "goal_accuracy": 1.0,
+      "file_accuracy": 1.0,
+      "constraint_accuracy": 1.0,
+      "detail_accuracy": 1.0,
+      "next_step_accuracy": 1.0,
+      "parse_failures": 0
+    },
+    {
+      "condition": "C1_recent_only",
+      "n": 6,
+      "continuity_score": 0.7999999999999999,
+      "avg_prompt_tokens": 461.5,
+      "avg_output_tokens": 50.0,
+      "avg_total_tokens": 511.5,
+      "avg_elapsed_seconds": 6.905097961425781,
+      "goal_accuracy": 1.0,
+      "file_accuracy": 0.5,
+      "constraint_accuracy": 0.8333333333333334,
+      "detail_accuracy": 0.8333333333333334,
+      "next_step_accuracy": 0.8333333333333334,
+      "parse_failures": 0
+    },
+    {
+      "condition": "C2_bullet_summary",
+      "n": 6,
+      "continuity_score": 1.0,
+      "avg_prompt_tokens": 558.5,
+      "avg_output_tokens": 50.0,
+      "avg_total_tokens": 608.5,
+      "avg_elapsed_seconds": 7.314411958058675,
+      "goal_accuracy": 1.0,
+      "file_accuracy": 1.0,
+      "constraint_accuracy": 1.0,
+      "detail_accuracy": 1.0,
+      "next_step_accuracy": 1.0,
+      "parse_failures": 0
+    },
+    {
+      "condition": "C3_structured_state_sheet",
+      "n": 6,
+      "continuity_score": 1.0,
+      "avg_prompt_tokens": 570.1666666666666,
+      "avg_output_tokens": 50.0,
+      "avg_total_tokens": 620.1666666666666,
+      "avg_elapsed_seconds": 7.409518996874492,
+      "goal_accuracy": 1.0,
+      "file_accuracy": 1.0,
+      "constraint_accuracy": 1.0,
+      "detail_accuracy": 1.0,
+      "next_step_accuracy": 1.0,
+      "parse_failures": 0
+    },
+    {
+      "condition": "C4_hybrid_state_sheet",
+      "n": 6,
+      "continuity_score": 1.0,
+      "avg_prompt_tokens": 596.1666666666666,
+      "avg_output_tokens": 50.0,
+      "avg_total_tokens": 646.1666666666666,
+      "avg_elapsed_seconds": 7.700762987136841,
+      "goal_accuracy": 1.0,
+      "file_accuracy": 1.0,
+      "constraint_accuracy": 1.0,
+      "detail_accuracy": 1.0,
+      "next_step_accuracy": 1.0,
+      "parse_failures": 0
+    }
+  ],
+  "family_rows": [
+    {
+      "condition": "C0_full_transcript",
+      "family": "latest_constraint",
+      "n": 2,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C1_recent_only",
+      "family": "latest_constraint",
+      "n": 2,
+      "continuity_score": 0.6
+    },
+    {
+      "condition": "C2_bullet_summary",
+      "family": "latest_constraint",
+      "n": 2,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C3_structured_state_sheet",
+      "family": "latest_constraint",
+      "n": 2,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C4_hybrid_state_sheet",
+      "family": "latest_constraint",
+      "n": 2,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C0_full_transcript",
+      "family": "brittle_detail",
+      "n": 2,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C1_recent_only",
+      "family": "brittle_detail",
+      "n": 2,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C2_bullet_summary",
+      "family": "brittle_detail",
+      "n": 2,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C3_structured_state_sheet",
+      "family": "brittle_detail",
+      "n": 2,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C4_hybrid_state_sheet",
+      "family": "brittle_detail",
+      "n": 2,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C0_full_transcript",
+      "family": "next_step_continuity",
+      "n": 2,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C1_recent_only",
+      "family": "next_step_continuity",
+      "n": 2,
+      "continuity_score": 0.8
+    },
+    {
+      "condition": "C2_bullet_summary",
+      "family": "next_step_continuity",
+      "n": 2,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C3_structured_state_sheet",
+      "family": "next_step_continuity",
+      "n": 2,
+      "continuity_score": 1.0
+    },
+    {
+      "condition": "C4_hybrid_state_sheet",
+      "family": "next_step_continuity",
+      "n": 2,
+      "continuity_score": 1.0
+    }
+  ],
+  "error_rows": [
+    {
+      "condition": "C1_recent_only",
+      "error_type": "blended_old_and_new_state",
+      "count": 1
+    },
+    {
+      "condition": "C1_recent_only",
+      "error_type": "wrong_file",
+      "count": 2
+    }
+  ]
+}

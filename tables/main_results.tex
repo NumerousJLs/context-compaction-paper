@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering
+\begin{tabular}{lcccccccccccc}
+\hline
+condition & n & continuity_score & avg_prompt_tokens & avg_output_tokens & avg_total_tokens & avg_elapsed_seconds & goal_accuracy & file_accuracy & constraint_accuracy & detail_accuracy & next_step_accuracy & parse_failures \\
+\hline
+C0_full_transcript & 30 & 1.0000 & 701.7333 & 50.0000 & 751.7333 & 4.3448 & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 0 \\
+C1_recent_only & 30 & 0.8333 & 423.0333 & 50.0000 & 473.0333 & 3.5740 & 1.0000 & 0.8000 & 0.7333 & 0.7667 & 0.8667 & 0 \\
+C2_bullet_summary & 30 & 0.9200 & 528.8333 & 50.0000 & 578.8333 & 3.8500 & 1.0000 & 0.7000 & 0.9667 & 0.9667 & 0.9667 & 0 \\
+C3_structured_state_sheet & 30 & 1.0000 & 515.0667 & 50.0000 & 565.0667 & 3.8219 & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 0 \\
+C4_hybrid_state_sheet & 30 & 1.0000 & 556.7333 & 50.0000 & 606.7333 & 3.9405 & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 0 \\
+\hline
+\end{tabular}
+\caption{Main evaluation results by condition.}
+\label{tab:main-results}
+\end{table}

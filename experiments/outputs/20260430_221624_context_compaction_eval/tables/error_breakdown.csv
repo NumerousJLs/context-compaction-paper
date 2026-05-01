@@ -1,0 +1,4 @@
+condition,error_type,count
+C1_recent_only,blended_old_and_new_state,2
+C1_recent_only,wrong_file,4
+C2_bullet_summary,wrong_file,6
